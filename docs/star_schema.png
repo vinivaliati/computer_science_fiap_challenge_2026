@@ -1,0 +1,162 @@
+<svg viewBox="0 0 1100 780" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="12">
+
+  <rect width="1100" height="780" fill="#ffffff"/>
+
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 Z" fill="#5b8fc9"/>
+    </marker>
+  </defs>
+
+  <!--
+    LAYOUT
+    dim_dates      x=420  y=40   w=240 h=156  bottom=196
+    fct_sessoes    x=420  y=270  w=240 h=210  bottom=480  right=660
+    dim_users      x=80   y=250  w=220 h=156  bottom=406  right=300
+    dim_points     x=760  y=250  w=220 h=156  bottom=406
+    dim_plans      x=80   y=510  w=220 h=128  bottom=638  right=300
+    fct_invoices   x=760  y=510  w=220 h=146  bottom=656
+    dim_geography  x=420  y=560  w=240 h=146  bottom=706
+  -->
+
+  <!-- ── dim_dates ── -->
+  <rect x="420" y="40"  width="240" height="28"  rx="3" fill="#1e3a5f"/>
+  <text x="540" y="59"  text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">dim_dates</text>
+  <rect x="420" y="68"  width="240" height="128" fill="#eaf1fb" stroke="#b0c8e8" stroke-width="1"/>
+  <text x="434" y="86"  fill="#1e3a5f" font-weight="bold">session_date</text>  <text x="646" y="86"  text-anchor="end" fill="#555">date</text>
+  <text x="434" y="104" fill="#333">day_of_week</text>                         <text x="646" y="104" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="122" fill="#333">month</text>                               <text x="646" y="122" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="140" fill="#333">year</text>                                <text x="646" y="140" text-anchor="end" fill="#555">int</text>
+  <text x="434" y="158" fill="#333">shift</text>                               <text x="646" y="158" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="176" fill="#333">is_weekend</text>                          <text x="646" y="176" text-anchor="end" fill="#555">boolean</text>
+
+  <!-- ── fct_sessoes ── -->
+  <rect x="420" y="270" width="240" height="28"  rx="3" fill="#1e3a5f"/>
+  <text x="540" y="289" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">fct_sessoes</text>
+  <rect x="420" y="298" width="240" height="182" fill="#eaf1fb" stroke="#b0c8e8" stroke-width="1"/>
+  <text x="434" y="316" fill="#1e3a5f" font-weight="bold">session_id</text>    <text x="646" y="316" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="334" fill="#333">user_id</text>                             <text x="646" y="334" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="352" fill="#333">point_id</text>                            <text x="646" y="352" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="370" fill="#333">plan_id</text>                             <text x="646" y="370" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="388" fill="#333">geo_id</text>                              <text x="646" y="388" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="406" fill="#333">session_date</text>                        <text x="646" y="406" text-anchor="end" fill="#555">date</text>
+  <text x="434" y="424" fill="#333">duration_min</text>                        <text x="646" y="424" text-anchor="end" fill="#555">int</text>
+  <text x="434" y="442" fill="#333">kwh_delivered</text>                       <text x="646" y="442" text-anchor="end" fill="#555">decimal</text>
+  <text x="434" y="460" fill="#333">status · anomaly_flag</text>               <text x="646" y="460" text-anchor="end" fill="#555">varchar · bool</text>
+
+  <!-- ── dim_users ── -->
+  <rect x="80"  y="250" width="220" height="28"  rx="3" fill="#1e3a5f"/>
+  <text x="190" y="269" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">dim_users</text>
+  <rect x="80"  y="278" width="220" height="128" fill="#eaf1fb" stroke="#b0c8e8" stroke-width="1"/>
+  <text x="94"  y="296" fill="#1e3a5f" font-weight="bold">user_id</text>       <text x="286" y="296" text-anchor="end" fill="#555">varchar</text>
+  <text x="94"  y="314" fill="#333">name</text>                                <text x="286" y="314" text-anchor="end" fill="#555">varchar</text>
+  <text x="94"  y="332" fill="#333">email</text>                               <text x="286" y="332" text-anchor="end" fill="#555">varchar</text>
+  <text x="94"  y="350" fill="#333">unit</text>                                <text x="286" y="350" text-anchor="end" fill="#555">varchar</text>
+  <text x="94"  y="368" fill="#333">rfid_tag</text>                            <text x="286" y="368" text-anchor="end" fill="#555">varchar</text>
+  <text x="94"  y="386" fill="#333">active · user_type</text>                  <text x="286" y="386" text-anchor="end" fill="#555">bool · varchar</text>
+
+  <!-- ── dim_points ── -->
+  <rect x="760" y="250" width="220" height="28"  rx="3" fill="#1e3a5f"/>
+  <text x="870" y="269" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">dim_points</text>
+  <rect x="760" y="278" width="220" height="128" fill="#eaf1fb" stroke="#b0c8e8" stroke-width="1"/>
+  <text x="774" y="296" fill="#1e3a5f" font-weight="bold">point_id</text>      <text x="966" y="296" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="314" fill="#333">model</text>                               <text x="966" y="314" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="332" fill="#333">location</text>                            <text x="966" y="332" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="350" fill="#333">power_kw</text>                            <text x="966" y="350" text-anchor="end" fill="#555">decimal</text>
+  <text x="774" y="368" fill="#333">protocol</text>                            <text x="966" y="368" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="386" fill="#333">status · installed_at</text>               <text x="966" y="386" text-anchor="end" fill="#555">varchar · date</text>
+  <!-- fonte Open Charge Map -->
+  <text x="870" y="400" text-anchor="middle" font-size="9" fill="#888" font-style="italic">fonte: Open Charge Map</text>
+
+  <!-- ── dim_plans ── -->
+  <rect x="80"  y="510" width="220" height="28"  rx="3" fill="#1e3a5f"/>
+  <text x="190" y="529" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">dim_plans</text>
+  <rect x="80"  y="538" width="220" height="110" fill="#eaf1fb" stroke="#b0c8e8" stroke-width="1"/>
+  <text x="94"  y="556" fill="#1e3a5f" font-weight="bold">plan_id</text>       <text x="286" y="556" text-anchor="end" fill="#555">varchar</text>
+  <text x="94"  y="574" fill="#333">type</text>                                <text x="286" y="574" text-anchor="end" fill="#555">varchar</text>
+  <text x="94"  y="592" fill="#333">rate_per_min</text>                        <text x="286" y="592" text-anchor="end" fill="#555">decimal</text>
+  <text x="94"  y="610" fill="#333">monthly_fee</text>                         <text x="286" y="610" text-anchor="end" fill="#555">decimal</text>
+  <text x="94"  y="628" fill="#333">discount_pct · active</text>               <text x="286" y="628" text-anchor="end" fill="#555">decimal · bool</text>
+
+  <!-- ── fct_invoices ── -->
+  <rect x="760" y="510" width="220" height="28"  rx="3" fill="#1e3a5f"/>
+  <text x="870" y="529" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">fct_invoices</text>
+  <rect x="760" y="538" width="220" height="128" fill="#eaf1fb" stroke="#b0c8e8" stroke-width="1"/>
+  <text x="774" y="556" fill="#1e3a5f" font-weight="bold">invoice_id</text>    <text x="966" y="556" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="574" fill="#333">user_id</text>                             <text x="966" y="574" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="592" fill="#333">plan_id</text>                             <text x="966" y="592" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="610" fill="#333">geo_id</text>                              <text x="966" y="610" text-anchor="end" fill="#555">varchar</text>
+  <text x="774" y="628" fill="#333">ref_month · total_kwh</text>               <text x="966" y="628" text-anchor="end" fill="#555">date · decimal</text>
+  <text x="774" y="646" fill="#333">total_amount · status</text>               <text x="966" y="646" text-anchor="end" fill="#555">decimal · varchar</text>
+
+  <!-- ── dim_geography ── -->
+  <rect x="420" y="560" width="240" height="28"  rx="3" fill="#1e3a5f"/>
+  <text x="540" y="579" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">dim_geography</text>
+  <rect x="420" y="588" width="240" height="128" fill="#eaf1fb" stroke="#b0c8e8" stroke-width="1"/>
+  <text x="434" y="606" fill="#1e3a5f" font-weight="bold">geo_id</text>        <text x="646" y="606" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="624" fill="#333">city</text>                                <text x="646" y="624" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="642" fill="#333">state</text>                               <text x="646" y="642" text-anchor="end" fill="#555">varchar</text>
+  <text x="434" y="660" fill="#333">pop_density</text>                         <text x="646" y="660" text-anchor="end" fill="#555">decimal</text>
+  <text x="434" y="678" fill="#333">ev_fleet_count</text>                      <text x="646" y="678" text-anchor="end" fill="#555">int</text>
+  <text x="434" y="696" fill="#333">chargepoints_count</text>                  <text x="646" y="696" text-anchor="end" fill="#555">int</text>
+  <!-- fontes -->
+  <text x="540" y="714" text-anchor="middle" font-size="9" fill="#888" font-style="italic">fontes: IBGE · ABVE · Open Charge Map</text>
+
+  <!-- ════════════════════════
+       SETAS
+  ════════════════════════ -->
+
+  <!-- 1) dim_dates → fct_sessoes (vertical direto) -->
+  <path d="M540,196 L540,270" fill="none" stroke="#5b8fc9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="546" y="227" font-size="10" fill="#5b8fc9">1</text>
+  <text x="546" y="262" font-size="10" fill="#5b8fc9">*</text>
+
+  <!-- 2) dim_users → fct_sessoes (horizontal direto) -->
+  <path d="M300,342 L420,342" fill="none" stroke="#5b8fc9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="304" y="337" font-size="10" fill="#5b8fc9">1</text>
+  <text x="404" y="337" font-size="10" fill="#5b8fc9">*</text>
+
+  <!-- 3) dim_points → fct_sessoes (horizontal direto) -->
+  <path d="M760,342 L660,342" fill="none" stroke="#5b8fc9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="748" y="337" font-size="10" fill="#5b8fc9">1</text>
+  <text x="664" y="337" font-size="10" fill="#5b8fc9">*</text>
+
+  <!-- 4) dim_plans → fct_sessoes
+       sai direita de dim_plans (300, 592), vai para corredor x=370,
+       sobe até y=424 (altura do plan_id na fct), entra pela esquerda -->
+  <path d="M300,592 L370,592 L370,424 L420,424" fill="none" stroke="#5b8fc9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="304" y="587" font-size="10" fill="#5b8fc9">1</text>
+  <text x="403" y="419" font-size="10" fill="#5b8fc9">*</text>
+
+  <!-- 5) dim_geography → fct_sessoes
+       sai topo de dim_geography (540, 560), sobe até y=490,
+       entra pela base de fct_sessoes (540, 480) -->
+  <path d="M540,560 L540,480" fill="none" stroke="#5b8fc9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="546" y="543" font-size="10" fill="#5b8fc9">1</text>
+  <text x="546" y="491" font-size="10" fill="#5b8fc9">*</text>
+
+  <!-- 6) dim_geography → fct_invoices
+       sai direita de dim_geography (660, 624), vai para corredor x=720,
+       sobe até y=610 (altura de geo_id na fct_invoices), entra pela esquerda -->
+  <path d="M660,624 L720,624 L720,610 L760,610" fill="none" stroke="#5b8fc9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="664" y="619" font-size="10" fill="#5b8fc9">1</text>
+  <text x="744" y="605" font-size="10" fill="#5b8fc9">*</text>
+
+  <!-- 7) dim_users → fct_invoices
+       sai base de dim_users (190, 406), desce até corredor y=470,
+       vai para x=700 (corredor antes de fct_invoices) passando por baixo de fct_sessoes,
+       mas fct_sessoes termina em y=480, então usamos y=500 como corredor,
+       depois desce até y=574 e entra pela esquerda -->
+  <path d="M190,406 L190,500 L700,500 L700,574 L760,574" fill="none" stroke="#5b8fc9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="196" y="422" font-size="10" fill="#5b8fc9">1</text>
+  <text x="744" y="569" font-size="10" fill="#5b8fc9">*</text>
+
+  <!-- 8) dim_plans → fct_invoices
+       sai base de dim_plans (190, 648), desce até y=670,
+       vai para x=870 (centro de fct_invoices),
+       entra pela base de fct_invoices (870, 666) -->
+  <path d="M190,648 L190,670 L870,670 L870,666" fill="none" stroke="#5b8fc9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="196" y="664" font-size="10" fill="#5b8fc9">1</text>
+  <text x="876" y="666" font-size="10" fill="#5b8fc9">*</text>
+
+</svg>
