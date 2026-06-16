@@ -222,11 +222,11 @@ Consumir as APIs externas (Open Charge Map, IBGE, ABVE) e usar o dbt para padron
 
 Construir os models dbt da camada de marts para transformar os dados brutos no star schema definido na sprint 01. Ao final dessa etapa, o banco estará populado e pronto para consumo pelos módulos seguintes.
 
-**Etapa 3 — Motor de rateio e IA (semanas 5–6)**
+**Etapa 3 — Motor de rateio e IA**
 
 Implementar o motor de rateio em Python com os três planos e todos os casos excepcionais. Implementar os quatro modelos de IA previsão de consumo, clustering de perfis, detecção de anomalias e score de expansão consumindo diretamente o star schema.
 
-**Etapa 4 — Interfaces (semanas 7–8)**
+**Etapa 4 — Interfaces**
 
 Desenvolver o painel do gestor no Power BI conectado ao PostgreSQL, o dashboard de IA e o app do usuário em Streamlit. Testes de integração ponta a ponta.
 
