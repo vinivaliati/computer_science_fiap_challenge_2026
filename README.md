@@ -14,11 +14,11 @@
 
 ## O Problema
 
-O crescimento da frota de veículos elétricos no Brasil é acelerado e consistente. Em maio de 2026, os eletrificados já representavam 17% das vendas de automóveis leves — ante 7,8% no mesmo período de 2025. Esse crescimento chega inevitavelmente nos condomínios residenciais e edifícios corporativos, que passam a receber múltiplas solicitações de instalação de carregadores em vagas privativas e áreas comuns.
+O crescimento da frota de veículos elétricos no Brasil é acelerado e consistente. Em maio de 2026, os eletrificados já representavam 17% das vendas de automóveis leves ante 7,8% no mesmo período de 2025. Esse crescimento chega inevitavelmente nos condomínios residenciais e edifícios corporativos, que passam a receber múltiplas solicitações de instalação de carregadores em vagas privativas e áreas comuns.
 
-O problema é operacional: infraestruturas de recarga compartilhadas não têm mecanismos para estruturar sessões por usuário, calcular consumo individual e aplicar regras de cobrança justas. Sem gestão, o custo vai para a conta coletiva e é dividido entre todos — inclusive quem não tem veículo elétrico. Com instalações desordenadas, o risco de sobrecarga elétrica aumenta e o acesso para novos moradores fica comprometido.
+O problema é operacional: infraestruturas de recarga compartilhadas não têm mecanismos para estruturar sessões por usuário, calcular consumo individual e aplicar regras de cobrança justas. Sem gestão, o custo vai para a conta coletiva e é dividido entre todos inclusive quem não tem veículo elétrico. Com instalações desordenadas, o risco de sobrecarga elétrica aumenta e o acesso para novos moradores fica comprometido.
 
-O EV ChargeOps transforma cada sessão de recarga em dados estruturados que alimentam um sistema de cobrança automatizado, transparente e escalável. O piloto é o carregador GoodWe HCA G2 instalado no campus da FIAP — a base para validar a solução antes de levá-la a condomínios e prédios corporativos.
+O EV ChargeOps transforma cada sessão de recarga em dados estruturados que alimentam um sistema de cobrança automatizado, transparente e escalável. O piloto é o carregador GoodWe HCA G2 instalado no campus da FIAP a base para validar a solução antes de levá-la a condomínios e prédios corporativos.
 
 ---
 
@@ -26,7 +26,7 @@ O EV ChargeOps transforma cada sessão de recarga em dados estruturados que alim
 
 ### Crescimento da frota no Brasil
 
-A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades em março de 2026. Em todo o ano de 2025, foram 223.912 emplacamentos — recorde histórico. O ritmo em 2026 aponta para superar esse número: só no primeiro trimestre, 83.947 unidades foram emplacadas.
+A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades em março de 2026. Em todo o ano de 2025, foram 223.912 emplacamentos recorde histórico. O ritmo em 2026 aponta para superar esse número: só no primeiro trimestre, 83.947 unidades foram emplacadas.
 
 | Ano | Emplacamentos | Destaque |
 |-----|--------------|----------|
@@ -35,9 +35,9 @@ A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades
 | 2025 | 223.912 | Recorde histórico |
 | Jan–Mar 2026 | 83.947 | Ritmo de ~28 mil/mês |
 
-A concentração geográfica é relevante para o modelo de expansão da plataforma. São Paulo lidera com 181.305 unidades, seguido por Distrito Federal (48.502) e Rio de Janeiro (39.295). O Sudeste concentra 44,2% de todas as vendas — onde a demanda por infraestrutura compartilhada é mais urgente.
+A concentração geográfica é relevante para o modelo de expansão da plataforma. São Paulo lidera com 181.305 unidades, seguido por Distrito Federal (48.502) e Rio de Janeiro (39.295). O Sudeste concentra 44,2% de todas as vendas onde a demanda por infraestrutura compartilhada é mais urgente.
 
-Em setembro de 2025, o Brasil contava com 16.880 eletropostos públicos e semipúblicos. A proporção é de aproximadamente um eletroposto para cada 40 veículos elétricos, o que confirma que a maior parte das recargas acontece em ambientes privados — condomínios, estacionamentos corporativos e residências. Esse é o mercado que o EV ChargeOps endereça.
+Em setembro de 2025, o Brasil contava com 16.880 eletropostos públicos e semipúblicos. A proporção é de aproximadamente um eletroposto para cada 40 veículos elétricos, o que confirma que a maior parte das recargas acontece em ambientes privados condomínios, estacionamentos corporativos e residências. Esse é o mercado que o EV ChargeOps endereça.
 
 ### Desafios em infraestruturas compartilhadas
 
@@ -79,11 +79,11 @@ A RN 1.000/2021 é o marco regulatório federal para operação de carregadores 
 - **Comunicação prévia à distribuidora**: instalações para uso não exclusivamente privado exigem comunicação prévia à distribuidora local
 - **Protocolos abertos obrigatórios**: equipamentos semipúblicos devem suportar o protocolo OCPP (Open Charge Point Protocol), padrão de mercado nas versões 1.6 e 2.0
 
-A plataforma opera sobre OCPP e não realiza revenda de energia — o custo é repassado ao usuário sem margem no modelo básico.
+A plataforma opera sobre OCPP e não realiza revenda de energia o custo é repassado ao usuário sem margem no modelo básico.
 
 ### Lei Estadual SP nº 18.403/2026
 
-Sancionada em fevereiro de 2026, a lei assegura ao condômino o direito de instalar carregador individual em vaga privativa em condomínios no Estado de São Paulo. O resultado prático é o aumento do número de condomínios com múltiplos carregadores instalados — o cenário onde a gestão centralizada se torna indispensável. A lei não define critérios de rateio nem mecanismos de gestão de capacidade elétrica coletiva. Essa lacuna é o espaço que o EV ChargeOps ocupa.
+Sancionada em fevereiro de 2026, a lei assegura ao condômino o direito de instalar carregador individual em vaga privativa em condomínios no Estado de São Paulo. O resultado prático é o aumento do número de condomínios com múltiplos carregadores instalados o cenário onde a gestão centralizada se torna indispensável. A lei não define critérios de rateio nem mecanismos de gestão de capacidade elétrica coletiva. Essa lacuna é o espaço que o EV ChargeOps ocupa.
 
 ### Carregador GoodWe HCA G2
 
@@ -195,7 +195,7 @@ O banco segue o modelo star schema com duas tabelas fato e quatro dimensões.
 
 ## Plano para a Sprint 02
 
-Como não teremos acesso aos dados reais do carregador GoodWe durante o desenvolvimento, a sprint parte da geração de um dataset simulado que replica o comportamento esperado de sessões reais. As APIs externas entram nessa fase para enriquecer as dimensões do star schema — não em tempo de execução da plataforma.
+Como não teremos acesso aos dados reais do carregador GoodWe durante o desenvolvimento, a sprint parte da geração de um dataset simulado que replica o comportamento esperado de sessões reais. As APIs externas entram nessa fase para enriquecer as dimensões do star schema não em tempo de execução da plataforma.
 
 O fluxo de dados da sprint segue essa ordem:
 
@@ -214,17 +214,17 @@ IA (scikit-learn)          Power BI (painel do gestor)
 Streamlit (dashboard IA)   Streamlit (app do usuário)
 ```
 
-**Etapa 1 — Ingestão e dados simulados (semanas 1–2)**
+**Etapa 1 — Ingestão e dados simulados**
 
-Consumir as APIs externas (Open Charge Map, IBGE, ABVE) e usar o dbt para padronizar e carregar as dimensões geográficas e de pontos de recarga no banco. Em paralelo, desenvolver o script Python de geração do dataset simulado de sessões — cobrindo 6 meses, múltiplos usuários, os três planos de cobrança e cenários excepcionais.
+Consumir as APIs externas (Open Charge Map, IBGE, ABVE) e usar o dbt para padronizar e carregar as dimensões geográficas e de pontos de recarga no banco. Em paralelo, desenvolver o script Python de geração do dataset simulado de sessões cobrindo 6 meses, múltiplos usuários, os três planos de cobrança e cenários excepcionais.
 
-**Etapa 2 — Transformação com dbt e star schema (semanas 3–4)**
+**Etapa 2 — Transformação com dbt e star schema**
 
 Construir os models dbt da camada de marts para transformar os dados brutos no star schema definido na sprint 01. Ao final dessa etapa, o banco estará populado e pronto para consumo pelos módulos seguintes.
 
 **Etapa 3 — Motor de rateio e IA (semanas 5–6)**
 
-Implementar o motor de rateio em Python com os três planos e todos os casos excepcionais. Implementar os quatro modelos de IA — previsão de consumo, clustering de perfis, detecção de anomalias e score de expansão — consumindo diretamente o star schema.
+Implementar o motor de rateio em Python com os três planos e todos os casos excepcionais. Implementar os quatro modelos de IA previsão de consumo, clustering de perfis, detecção de anomalias e score de expansão consumindo diretamente o star schema.
 
 **Etapa 4 — Interfaces (semanas 7–8)**
 
