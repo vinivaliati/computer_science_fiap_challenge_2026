@@ -189,7 +189,7 @@ fatura_usuario    = proporcional ao uso individual dentro do pacote
 
 O banco segue o modelo star schema com duas tabelas fato e quatro dimensões.
 
-![Star Schema](./docs/star_schema.png)
+![Star Schema](./docs/star_schema.svg)
 
 ---
 
