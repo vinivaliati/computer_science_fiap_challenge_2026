@@ -26,7 +26,7 @@ O EV ChargeOps transforma cada sessão de recarga em dados estruturados que alim
 
 ### Crescimento da frota no Brasil
 
-A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades em março de 2026. Em todo o ano de 2025, foram 223.912 emplacamentos — recorde histórico. O ritmo em 2026 aponta para superar esse número: só no primeiro trimestre, 83.947 unidades foram emplacadas.
+A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades em março de 2026. Em todo o ano de 2025, foram 223.912 emplacamentos recorde histórico. O ritmo em 2026 aponta para superar esse número: só no primeiro trimestre, 83.947 unidades foram emplacadas.
 
 | Ano | Emplacamentos | Destaque |
 |-----|--------------|----------|
@@ -83,7 +83,7 @@ A plataforma opera sobre OCPP e não realiza revenda de energia — o custo é r
 
 ### Lei Estadual SP nº 18.403/2026
 
-Sancionada em fevereiro de 2026, a lei assegura ao condômino o direito de instalar carregador individual em vaga privativa em condomínios no Estado de São Paulo. O resultado prático é o aumento do número de condomínios com múltiplos carregadores instalados — o cenário onde a gestão centralizada se torna indispensável. A lei não define critérios de rateio nem mecanismos de gestão de capacidade elétrica coletiva. Essa lacuna é o espaço que o EV ChargeOps ocupa.
+Sancionada em fevereiro de 2026, a lei assegura ao condômino o direito de instalar carregador individual em vaga privativa em condomínios no Estado de São Paulo. O resultado prático é o aumento do número de condomínios com múltiplos carregadores instalados o cenário onde a gestão centralizada se torna indispensável. A lei não define critérios de rateio nem mecanismos de gestão de capacidade elétrica coletiva. Essa lacuna é o espaço que o EV ChargeOps ocupa.
 
 ### Carregador GoodWe HCA G2
 
@@ -195,7 +195,7 @@ O banco segue o modelo star schema com duas tabelas fato e quatro dimensões.
 
 ## Plano para a Sprint 02
 
-Como não teremos acesso aos dados reais do carregador GoodWe durante o desenvolvimento, a sprint parte da geração de um dataset simulado que replica o comportamento esperado de sessões reais. As APIs externas entram nessa fase para enriquecer as dimensões do star schema — não em tempo de execução da plataforma.
+Como não teremos acesso aos dados reais do carregador GoodWe durante o desenvolvimento, a sprint parte da geração de um dataset simulado que replica o comportamento esperado de sessões reais. As APIs externas entram nessa fase para enriquecer as dimensões do star schema não em tempo de execução da plataforma.
 
 Todo o pipeline de dados é implementado em Python: da ingestão das APIs externas à limpeza, transformação e carga no banco. Sem camada intermediária de orquestração, o fluxo é direto e adequado ao escopo de validação do piloto.
 
