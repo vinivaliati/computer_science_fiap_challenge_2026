@@ -16,7 +16,7 @@
 
 O crescimento da frota de veículos elétricos no Brasil é acelerado e consistente. Em maio de 2026, os eletrificados já representavam 17% das vendas de automóveis leves ante 7,8% no mesmo período de 2025. Esse crescimento chega inevitavelmente nos condomínios residenciais e edifícios corporativos, que passam a receber múltiplas solicitações de instalação de carregadores em vagas privativas e áreas comuns.
 
-O problema é operacional: infraestruturas de recarga compartilhadas não têm mecanismos para estruturar sessões por usuário, calcular consumo individual e aplicar regras de cobrança justas. Sem gestão, o custo vai para a conta coletiva e é dividido entre todos — inclusive quem não tem veículo elétrico. Com instalações desordenadas, o risco de sobrecarga elétrica aumenta e o acesso para novos moradores fica comprometido.
+O problema é operacional: infraestruturas de recarga compartilhadas não têm mecanismos para estruturar sessões por usuário, calcular consumo individual e aplicar regras de cobrança justas. Sem gestão, o custo vai para a conta coletiva e é dividido entre todos inclusive quem não tem veículo elétrico. Com instalações desordenadas, o risco de sobrecarga elétrica aumenta e o acesso para novos moradores fica comprometido.
 
 O EV ChargeOps transforma cada sessão de recarga em dados estruturados que alimentam um sistema de cobrança automatizado, transparente e escalável. O piloto é o carregador GoodWe HCA G2 instalado no campus da FIAP — a base para validar a solução antes de levá-la a condomínios e prédios corporativos.
 
@@ -35,7 +35,7 @@ A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades
 | 2025 | 223.912 | Recorde histórico |
 | Jan–Mar 2026 | 83.947 | Ritmo de ~28 mil/mês |
 
-A concentração geográfica é relevante para o modelo de expansão da plataforma. São Paulo lidera com 181.305 unidades, seguido por Distrito Federal (48.502) e Rio de Janeiro (39.295). O Sudeste concentra 44,2% de todas as vendas — onde a demanda por infraestrutura compartilhada é mais urgente.
+A concentração geográfica é relevante para o modelo de expansão da plataforma. São Paulo lidera com 181.305 unidades, seguido por Distrito Federal (48.502) e Rio de Janeiro (39.295). O Sudeste concentra 44,2% de todas as vendas onde a demanda por infraestrutura compartilhada é mais urgente.
 
 Em setembro de 2025, o Brasil contava com 16.880 eletropostos públicos e semipúblicos. A proporção é de aproximadamente um eletroposto para cada 40 veículos elétricos, o que confirma que a maior parte das recargas acontece em ambientes privados condomínios, estacionamentos corporativos e residências. Esse é o mercado que o EV ChargeOps endereça.
 
