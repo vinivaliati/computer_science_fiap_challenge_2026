@@ -37,7 +37,7 @@ A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades
 
 A concentração geográfica é relevante para o modelo de expansão da plataforma. São Paulo lidera com 181.305 unidades, seguido por Distrito Federal (48.502) e Rio de Janeiro (39.295). O Sudeste concentra 44,2% de todas as vendas — onde a demanda por infraestrutura compartilhada é mais urgente.
 
-Em setembro de 2025, o Brasil contava com 16.880 eletropostos públicos e semipúblicos. A proporção é de aproximadamente um eletroposto para cada 40 veículos elétricos, o que confirma que a maior parte das recargas acontece em ambientes privados — condomínios, estacionamentos corporativos e residências. Esse é o mercado que o EV ChargeOps endereça.
+Em setembro de 2025, o Brasil contava com 16.880 eletropostos públicos e semipúblicos. A proporção é de aproximadamente um eletroposto para cada 40 veículos elétricos, o que confirma que a maior parte das recargas acontece em ambientes privados condomínios, estacionamentos corporativos e residências. Esse é o mercado que o EV ChargeOps endereça.
 
 ### Desafios em infraestruturas compartilhadas
 
@@ -222,7 +222,7 @@ Implementar em Python as transformações que convertem os dados brutos no star 
 
 **Etapa 3 — Motor de rateio e IA**
 
-Implementar o motor de rateio em Python com os três planos e todos os casos excepcionais. Implementar os quatro modelos de IA — previsão de consumo, clustering de perfis, detecção de anomalias e score de expansão — consumindo diretamente o star schema.
+Implementar o motor de rateio em Python com os três planos e todos os casos excepcionais. Implementar os quatro modelos de IA previsão de consumo, clustering de perfis, detecção de anomalias e score de expansão consumindo diretamente o star schema.
 
 **Etapa 4 — Interfaces**
 
