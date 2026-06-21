@@ -79,7 +79,7 @@ A RN 1.000/2021 é o marco regulatório federal para operação de carregadores 
 - **Comunicação prévia à distribuidora**: instalações para uso não exclusivamente privado exigem comunicação prévia à distribuidora local
 - **Protocolos abertos obrigatórios**: equipamentos semipúblicos devem suportar o protocolo OCPP (Open Charge Point Protocol), padrão de mercado nas versões 1.6 e 2.0
 
-A plataforma opera sobre OCPP e não realiza revenda de energia — o custo é repassado ao usuário sem margem no modelo básico.
+A plataforma opera sobre OCPP e não realiza revenda de energia o custo é repassado ao usuário sem margem no modelo básico.
 
 ### Lei Estadual SP nº 18.403/2026
 
