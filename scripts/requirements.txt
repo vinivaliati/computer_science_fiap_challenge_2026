@@ -1,2 +1,6 @@
+Requirements · TXT
 requests
 pandas
+numpy
+faker
+ 
