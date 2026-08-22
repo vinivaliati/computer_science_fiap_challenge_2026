@@ -1,6 +1,5 @@
-Requirements · TXT
 requests
 pandas
 numpy
 faker
- 
+psycopg2-binary

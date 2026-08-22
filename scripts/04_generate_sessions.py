@@ -16,8 +16,10 @@ Escopo (definido com o time):
     assinatura individual, poucos no pacote condominial
   - Período: 2026-03-01 a 2026-08-31
 
-Saída: CSVs brutos em data/raw/simulado/ — ainda não no formato do star
-schema (isso é trabalho da Etapa 5, transformação e carga).
+Saída: CSVs brutos em data/raw/simulado/, já alinhados ao formato das
+tabelas do star schema (sql/01_star_schema.sql): plans.csv, points.csv,
+users.csv, vehicles.csv, sessions.csv. A carga em si (Etapa 5b) ainda faz
+a validação/transformação final antes do INSERT no Postgres.
 
 Uso:
     python scripts/04_generate_sessions.py
@@ -64,6 +66,40 @@ POINT_LOCATIONS = [
 POINT_POWER_KW = [22.0, 11.0, 22.0, 7.4]
 
 
+def generate_plans() -> pd.DataFrame:
+    """Tarifas de cada plano, conforme as fórmulas definidas na Sprint 01
+    (Frente 3). Valores de referência de mercado — ajustáveis depois."""
+    return pd.DataFrame([
+        {
+            "plan_type": "pay_per_use",
+            "description": "Cobrança por minuto, sem mensalidade",
+            "rate_per_min": 0.85,
+            "rate_per_min_discounted": None,
+            "monthly_fee": None,
+            "fixed_cost_monthly": None,
+            "active": True,
+        },
+        {
+            "plan_type": "assinatura",
+            "description": "Taxa fixa mensal + tarifa reduzida por minuto",
+            "rate_per_min": None,
+            "rate_per_min_discounted": 0.55,
+            "monthly_fee": 49.90,
+            "fixed_cost_monthly": None,
+            "active": True,
+        },
+        {
+            "plan_type": "pacote_condominial",
+            "description": "Contrato com o condomínio, tarifa reduzida para todos",
+            "rate_per_min": None,
+            "rate_per_min_discounted": 0.40,
+            "monthly_fee": None,
+            "fixed_cost_monthly": 2500.00,
+            "active": True,
+        },
+    ])
+
+
 def generate_points() -> pd.DataFrame:
     rows = []
     for i in range(N_POINTS):
@@ -89,8 +125,6 @@ def generate_users(points_df: pd.DataFrame) -> pd.DataFrame:
         plan_type = np.random.choice(plan_choices, p=plan_probs)
         # Usuário é vinculado a um ponto de recarga (seu condomínio/prédio).
         point_id = random.choice(points_df["point_id"].tolist())
-        # ~8% das unidades têm dois veículos cadastrados (cenário excepcional).
-        has_second_vehicle = random.random() < 0.08
 
         rows.append({
             "user_id": user_id,
@@ -102,8 +136,39 @@ def generate_users(points_df: pd.DataFrame) -> pd.DataFrame:
             "user_type": "morador",
             "plan_type": plan_type,
             "point_id": point_id,
-            "has_second_vehicle": has_second_vehicle,
         })
+    return pd.DataFrame(rows)
+
+
+# Distribuição de tipo de veículo entre a frota simulada, com base na
+# proporção BEV/PHEV observada na exploração real do RENAVAM (Etapa 2):
+# BEV bem mais comum que PHEV no mercado brasileiro atual.
+VEHICLE_TYPE_WEIGHTS = {"BEV": 0.70, "PHEV": 0.30}
+
+
+def generate_vehicles(users_df: pd.DataFrame) -> pd.DataFrame:
+    """1 linha por veículo. A maioria dos usuários tem só 1 veículo (V1,
+    primário); ~8% das unidades têm um segundo veículo cadastrado (V2,
+    secundário) — o cenário excepcional de 'dois veículos na mesma
+    unidade' descrito na Sprint 01."""
+    vehicle_type_choices = list(VEHICLE_TYPE_WEIGHTS.keys())
+    vehicle_type_probs = list(VEHICLE_TYPE_WEIGHTS.values())
+
+    rows = []
+    for user_id in users_df["user_id"]:
+        rows.append({
+            "vehicle_id": f"{user_id}-V1",
+            "user_id": user_id,
+            "vehicle_type": np.random.choice(vehicle_type_choices, p=vehicle_type_probs),
+            "is_primary": True,
+        })
+        if random.random() < 0.08:
+            rows.append({
+                "vehicle_id": f"{user_id}-V2",
+                "user_id": user_id,
+                "vehicle_type": np.random.choice(vehicle_type_choices, p=vehicle_type_probs),
+                "is_primary": False,
+            })
     return pd.DataFrame(rows)
 
 
@@ -144,9 +209,13 @@ def random_session_datetime(month_start: date) -> datetime:
     return datetime(session_date.year, session_date.month, session_date.day, hour, minute)
 
 
-def generate_sessions(users_df: pd.DataFrame, points_df: pd.DataFrame) -> pd.DataFrame:
+def generate_sessions(users_df: pd.DataFrame, points_df: pd.DataFrame, vehicles_df: pd.DataFrame) -> pd.DataFrame:
     power_by_point = dict(zip(points_df["point_id"], points_df["power_kw"]))
     months = month_range(PERIOD_START, PERIOD_END)
+
+    # Agrupa vehicle_id por user_id, para sortear entre os veículos reais
+    # daquele usuário (1 ou 2) em vez de assumir um V1/V2 fixo.
+    vehicles_by_user = vehicles_df.groupby("user_id")["vehicle_id"].apply(list).to_dict()
 
     sessions = []
     session_counter = 1
@@ -155,6 +224,7 @@ def generate_sessions(users_df: pd.DataFrame, points_df: pd.DataFrame) -> pd.Dat
         # Frequência de uso mensal varia por usuário (alguns carregam quase
         # todo dia útil, outros só esporadicamente).
         base_sessions_per_month = max(1, int(np.random.normal(loc=10, scale=4)))
+        vehicle_ids = vehicles_by_user[user["user_id"]]
 
         for month_start in months:
             # Cenário excepcional: usuário sem uso no mês (~7% de chance
@@ -165,12 +235,6 @@ def generate_sessions(users_df: pd.DataFrame, points_df: pd.DataFrame) -> pd.Dat
                 continue
 
             n_sessions_this_month = max(0, int(np.random.poisson(base_sessions_per_month)))
-
-            # Se o usuário tem um segundo veículo, gera sessões extras
-            # atribuídas a um vehicle_id diferente na mesma unidade.
-            vehicle_ids = ["V1"]
-            if user["has_second_vehicle"]:
-                vehicle_ids.append("V2")
 
             for _ in range(n_sessions_this_month):
                 vehicle_id = random.choice(vehicle_ids)
@@ -226,15 +290,20 @@ def generate_sessions(users_df: pd.DataFrame, points_df: pd.DataFrame) -> pd.Dat
     return pd.DataFrame(sessions)
 
 
-def print_summary(users_df: pd.DataFrame, points_df: pd.DataFrame, sessions_df: pd.DataFrame) -> None:
+def print_summary(users_df: pd.DataFrame, points_df: pd.DataFrame,
+                   vehicles_df: pd.DataFrame, sessions_df: pd.DataFrame) -> None:
     print(f"\nUsuários gerados: {len(users_df)}")
     print(f"Pontos de recarga gerados: {len(points_df)}")
+    print(f"Veículos gerados: {len(vehicles_df)}")
     print(f"Sessões geradas: {len(sessions_df)}")
 
     print("\nDistribuição de planos (usuários):")
     print(users_df["plan_type"].value_counts())
 
-    print("\nUsuários com segundo veículo:", users_df["has_second_vehicle"].sum())
+    print("\nDistribuição de tipo de veículo:")
+    print(vehicles_df["vehicle_type"].value_counts())
+
+    print("\nUsuários com segundo veículo:", (~vehicles_df["is_primary"]).sum())
 
     print("\nSessões por status:")
     print(sessions_df["status"].value_counts())
@@ -255,16 +324,20 @@ def print_summary(users_df: pd.DataFrame, points_df: pd.DataFrame, sessions_df: 
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    plans_df = generate_plans()
     points_df = generate_points()
     users_df = generate_users(points_df)
-    sessions_df = generate_sessions(users_df, points_df)
+    vehicles_df = generate_vehicles(users_df)
+    sessions_df = generate_sessions(users_df, points_df, vehicles_df)
 
+    plans_df.to_csv(OUTPUT_DIR / "plans.csv", index=False)
     points_df.to_csv(OUTPUT_DIR / "points.csv", index=False)
     users_df.to_csv(OUTPUT_DIR / "users.csv", index=False)
+    vehicles_df.to_csv(OUTPUT_DIR / "vehicles.csv", index=False)
     sessions_df.to_csv(OUTPUT_DIR / "sessions.csv", index=False)
 
     print(f"Arquivos salvos em: {OUTPUT_DIR}")
-    print_summary(users_df, points_df, sessions_df)
+    print_summary(users_df, points_df, vehicles_df, sessions_df)
 
 
 if __name__ == "__main__":
