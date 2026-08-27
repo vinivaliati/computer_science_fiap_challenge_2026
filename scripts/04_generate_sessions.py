@@ -58,10 +58,10 @@ PLAN_WEIGHTS = {
 
 POINT_MODELS = ["GoodWe HCA G2"] * N_POINTS
 POINT_LOCATIONS = [
-    "Residencial Jardim das Palmeiras - Garagem G1",
-    "Edifício Bela Vista - Subsolo 2",
-    "Condomínio Parque das Águas - Vaga Coletiva",
-    "Campus FIAP - Estacionamento Docente",
+    "Residencial Jardim das Palmeiras - Garagem G1 - São Paulo/SP",
+    "Edifício Bela Vista - Subsolo 2 - São Paulo/SP",
+    "Condomínio Parque das Águas - Vaga Coletiva - Rio de Janeiro/RJ",
+    "Campus FIAP - Estacionamento Docente - São Paulo/SP",
 ]
 POINT_POWER_KW = [22.0, 11.0, 22.0, 7.4]
 
