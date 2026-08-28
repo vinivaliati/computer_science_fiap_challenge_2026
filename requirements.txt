@@ -9,3 +9,7 @@ jupyter
 nbformat
 nbconvert
 ipykernel
+streamlit
+plotly
+matplotlib
+ 
