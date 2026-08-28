@@ -1,0 +1,11 @@
+requests
+pandas
+numpy
+faker
+psycopg2-binary
+scikit-learn
+joblib
+jupyter
+nbformat
+nbconvert
+ipykernel

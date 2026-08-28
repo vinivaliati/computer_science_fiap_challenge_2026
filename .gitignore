@@ -7,9 +7,10 @@ __pycache__/
 # Dados (não versionar dados gerados/baixados)
 data/raw/*
 data/processed/*
+models/output/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
- 
+
 # Docker
 pgdata/
  
