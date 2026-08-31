@@ -17,15 +17,13 @@ piloto GoodWe HCA G2.
 | Bryan Lima Garcia | rm573611 |
 | Vinicius Valiati Costa | rm568674 |
 
-## Links do projeto
+## Links do Projeto
 
-| Item | Link |
-|---|---|
-| Painel do gestor (Power BI) | *https://app.powerbi.com/view?r=eyJrIjoiYWQwZTlmOWUtOGM3NC00ZTUxLTg1ZjAtZmRkYzM2NWZkNDE2IiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9* |
-| Dashboard de IA (Streamlit) | *https://vinivaliati-computer-science-fiap-challe-appdashboard-ia-hqsiet.streamlit.app/* |
-| App do usuário (Streamlit) | *https://vinivaliati-computer-science-fiap-c-appdashboard-usuario-anjojx.streamlit.app/* |
-
-![App do usuário (Streamlit)](docs/app_usuario.gif)
+| Aplicação | Tecnologia | Acesso |
+|:---|:---:|:---:|
+| **Painel do Gestor** | Power BI | [**Abrir →**](https://app.powerbi.com/view?r=eyJrIjoiYWQwZTlmOWUtOGM3NC00ZTUxLTg1ZjAtZmRkYzM2NWZkNDE2IiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9) |
+| **Dashboard de IA** | Streamlit | [**Abrir →**](https://vinivaliati-computer-science-fiap-challe-appdashboard-ia-hqsiet.streamlit.app/) |
+| **App do Usuário** | Streamlit | [**Abrir →**](https://vinivaliati-computer-science-fiap-c-appdashboard-usuario-anjojx.streamlit.app/) |
 
 ## Sobre o problema
  
@@ -191,6 +189,8 @@ Aplicação Streamlit com uma aba para cada um dos quatro modelos, permitindo
 ajustar os parâmetros de entrada de forma interativa e visualizar o resultado
 imediatamente. Cada aba inclui uma seção explicando como interpretar os
 gráficos e os números apresentados.
+
+![Dashboard de IA (Streamlit)](docs/dash_ia.gif)
  
 **App do usuário** (`app/dashboard_usuario.py`)
 Protótipo sem autenticação, com um seletor simulando a escolha de um usuário
@@ -199,6 +199,7 @@ a previsão do mês seguinte. A seção de recomendação de plano foi desenhada
 sob a ótica do gestor: simula quanto aquele usuário pagaria em cada um dos
 três planos, dado seu padrão real de uso, e contextualiza a recomendação com
 o cluster de comportamento ao qual ele pertence.
+
  
 Este app lê seus dados de CSVs em `data/processed/`, não de uma conexão
 direta ao Postgres. A razão é o ambiente de publicação: hospedado no
@@ -210,12 +211,16 @@ faturas recalculadas), é preciso rodar esse script de novo e commitar os
 CSVs atualizados para o app publicado refletir a mudança. O restante do
 projeto, painel do gestor, motor de rateio e notebooks, continua consultando
 o Postgres normalmente.
+
+![App do usuário (Streamlit)](docs/app_usuario.gif)
  
 **Painel do gestor** (Power BI)
 Especificado em dois documentos dentro de `docs/`: a estrutura de abas e
 visuais (`painel_gestor_especificacao.md`) e as fórmulas de medidas DAX
 (`painel_gestor_formulas_dax.md`). O painel tem quatro abas: visão geral,
 sessões, faturamento e usuários e pontos.
+
+![Dashboard Gestão (PowerBI)](docs/dashboard_gestao.gif)
  
 ### 7. Testes de integração
  
@@ -245,7 +250,7 @@ ev-chargeops/
 │   │   ├── renavam/             Amostra usada na exploração inicial da fonte
 │   │   └── simulado/            CSVs gerados por 04_generate_sessions.py
 │   └── processed/               Dados tratados
-│       └── user_app_*.csv       Exportação para o App do Usuário, versionada (ver seção própria abaixo)
+│       └── user_app_*.csv       Exportação para o App do Usuário
 ├── docs/
 │   ├── app_usuario.gif                    Demonstração do App do Usuário
 │   ├── fontes-externas.md                 Descobertas da exploração de APIs
@@ -355,13 +360,4 @@ manter o app do usuário sincronizado.
 python scripts/08_integration_test.py
 ```
  
-## Equipe
- 
-| Nome | RM |
-|---|---|
-| Arthur Apolonio de Oliveira | rm571385 |
-| Matheus Bejarano da Costa Resende | rm569195 |
-| Dayvid Daniel Duarte Ramos | rm569482 |
-| Bryan Lima Garcia | rm573611 |
-| Vinicius Valiati Costa | rm568674 |
  
