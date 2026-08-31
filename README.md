@@ -253,6 +253,8 @@ ev-chargeops/
 │       └── user_app_*.csv       Exportação para o App do Usuário
 ├── docs/
 │   ├── app_usuario.gif                    Demonstração do App do Usuário
+│   ├── dash_ia.gif                        Demonstração do App do IA
+│   ├── dashboard_gestao.gif               Demonstração do Dashboard de gestão
 │   ├── fontes-externas.md                 Descobertas da exploração de APIs
 │   ├── painel_gestor_especificacao.md     Estrutura de abas e visuais do BI
 │   ├── painel_gestor_formulas_dax.md      Fórmulas DAX do painel
