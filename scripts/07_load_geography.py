@@ -5,12 +5,12 @@ Resolve o bloqueio identificado após a Etapa 5: dim_geography estava vazia
 e dim_points.geo_id era carregado como NULL, porque a exploração das APIs
 (Etapa 2) nunca virou carga real no star schema.
 
-Escopo: municípios de SP, RJ, DF, PR — reconciliados por nome normalizado
+Escopo: municípios de SP, RJ, DF, PR, reconciliados por nome normalizado
 (maiúsculas, sem acento) entre as 3 fontes:
   - IBGE Localidades: hierarquia de município (fonte da verdade dos nomes/UF)
   - IBGE Agregados: população estimada por município
   - RENAVAM: frota BEV/PHEV por UF/município (heurística de sufixo EV/DM
-    confirmada na Etapa 2 — ver docs/fontes-externas.md)
+    confirmada na Etapa 2, ver docs/fontes-externas.md)
   - Open Charge Map: contagem de pontos de recarga por UF (não há
     granularidade de município nos dados livres da API, então esta
     contagem é aplicada por UF)
@@ -65,17 +65,17 @@ UF_NOME_EXTENSO = {
     "PR": "PARANA",
 }
 
-# URL do RENAVAM muda todo mês (ver docs/fontes-externas.md) — mesma URL
-# já usada e validada no script 03_explore_renavam.py.
+# URL do RENAVAM muda todo mês (ver docs/fontes-externas.md), mesma URL
+# já validada em 03_explore_renavam.py.
 RENAVAM_URL = (
     "https://dados.transportes.gov.br/dataset/12686da0-3d71-4499-b432-d270f785c907"
     "/resource/85150148-6a47-4600-8b6a-061871c980f7"
     "/download/i_frota_por_uf_municipio_marca_e_modelo_ano_julho_2026.zip"
 )
 
-# Mesma heurística de identificação BEV/PHEV validada na Etapa 2
-# (ver 03_explore_renavam.py e docs/fontes-externas.md para o histórico
-# dos ajustes, incluindo o falso positivo "ONIX" corrigido com \b).
+# Mesma heurística BEV/PHEV validada na Etapa 2 (ver 03_explore_renavam.py
+# e docs/fontes-externas.md para o histórico dos ajustes, incluindo o
+# falso positivo "ONIX" corrigido com \b).
 BEV_PATTERN = r"\bEV\b|\dEV\b|EUV\b"
 PHEV_PATTERN = r"\bDM\b"
 FALLBACK_PATTERN = "|".join([
@@ -90,9 +90,9 @@ FALLBACK_PATTERN = "|".join([
 ])
 
 
+# Normaliza nome de município para reconciliação: maiúsculas, sem acento,
+# sem espaço duplicado ou nas pontas.
 def normalize_name(name: str) -> str:
-    """Normaliza nome de município para reconciliação: maiúsculas, sem
-    acento, sem espaço duplicado/nas pontas."""
     if pd.isna(name):
         return ""
     nfkd = unicodedata.normalize("NFKD", str(name))
@@ -115,9 +115,9 @@ def fetch_ibge_municipios(uf: str) -> pd.DataFrame:
     ])
 
 
+# Retorna {municipio_id: populacao}. Busca em lotes de 50 IDs, a API
+# rejeita URLs muito longas com centenas de IDs juntos.
 def fetch_ibge_populacao(municipio_ids: list[int]) -> dict:
-    """Retorna {municipio_id: populacao}. Consulta em lotes de 50 IDs por
-    chamada — a API rejeita URLs muito longas com centenas de IDs juntos."""
     populacao = {}
     batch_size = 50
     for i in range(0, len(municipio_ids), batch_size):
@@ -148,10 +148,8 @@ def download_renavam() -> Path:
     extract_dir = DATA_DIR / "renavam"
     existing = list(extract_dir.glob("*")) if extract_dir.exists() else []
     if existing:
-        print(f"  RENAVAM já extraído em {extract_dir}, reutilizando.")
         return existing[0]
 
-    print(f"  Baixando RENAVAM completo de {RENAVAM_URL}...")
     response = requests.get(RENAVAM_URL, timeout=180)
     response.raise_for_status()
     extract_dir.mkdir(parents=True, exist_ok=True)
@@ -172,11 +170,10 @@ def classify_vehicle(marca_modelo: str) -> str | None:
     return None
 
 
+# Lê o RENAVAM completo, filtra as UFs de interesse, classifica BEV/PHEV
+# e agrega por UF+município normalizado.
 def fetch_renavam_fleet(ufs: list[str]) -> pd.DataFrame:
-    """Lê o RENAVAM completo, filtra as UFs de interesse, classifica
-    BEV/PHEV e agrega por UF+município normalizado."""
     file_path = download_renavam()
-    print(f"  Lendo {file_path.name} (arquivo completo, pode levar alguns segundos)...")
 
     df = pd.read_csv(file_path, sep=";", encoding="utf-8", low_memory=False)
     df.columns = [c.strip() for c in df.columns]
@@ -211,11 +208,10 @@ def fetch_renavam_fleet(ufs: list[str]) -> pd.DataFrame:
 # Open Charge Map — cobertura por UF
 # ────────────────────────────────────────────
 
+# Conta POIs por estado. A API não expõe filtro direto por StateOrProvince
+# de forma confiável (campo às vezes vem vazio, ver docs/fontes-externas.md),
+# então buscamos por país e agregamos usando StateOrProvince quando presente.
 def fetch_ocm_coverage_by_state(ufs: list[str]) -> dict:
-    """Conta POIs por estado. A API não expõe filtro direto por
-    StateOrProvince de forma confiável (campo às vezes vem vazio — ver
-    docs/fontes-externas.md), então buscamos por país e agregamos usando
-    o campo StateOrProvince quando presente."""
     params = {
         "output": "json",
         "countrycode": "BR",
@@ -268,26 +264,22 @@ def build_dim_geography() -> tuple[pd.DataFrame, dict]:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     report = {"municipios_ibge": 0, "com_populacao": 0, "com_frota_renavam": 0}
 
-    print("Buscando municípios via IBGE Localidades...")
     municipios_frames = [fetch_ibge_municipios(uf) for uf in UFS]
     municipios_df = pd.concat(municipios_frames, ignore_index=True)
     municipios_df["city_norm"] = municipios_df["city"].apply(normalize_name)
     report["municipios_ibge"] = len(municipios_df)
-    print(f"  {len(municipios_df)} municípios encontrados em {UFS}.")
+    print(f"Municípios (IBGE): {len(municipios_df)} em {UFS}.")
 
-    print("\nBuscando população via IBGE Agregados (isso pode levar alguns minutos)...")
     populacao = fetch_ibge_populacao(municipios_df["ibge_municipio_id"].tolist())
     municipios_df["population_estimate"] = municipios_df["ibge_municipio_id"].map(populacao)
     report["com_populacao"] = municipios_df["population_estimate"].notna().sum()
-    print(f"  População resolvida para {report['com_populacao']} de {len(municipios_df)} municípios.")
+    print(f"População resolvida: {report['com_populacao']} de {len(municipios_df)} municípios.")
 
-    print("\nBuscando frota BEV/PHEV via RENAVAM...")
     fleet_df = fetch_renavam_fleet(UFS)
-    print(f"  {len(fleet_df)} combinações UF+município com frota eletrificada.")
+    print(f"Frota RENAVAM: {len(fleet_df)} combinações UF+município com veículo eletrificado.")
 
-    print("\nBuscando cobertura de eletropostos via Open Charge Map...")
     ocm_by_state = fetch_ocm_coverage_by_state(UFS)
-    print(f"  Cobertura por UF: {ocm_by_state}")
+    print(f"Cobertura Open Charge Map por UF: {ocm_by_state}")
 
     # Reconciliação: match exato por (state, city_norm).
     merged = municipios_df.merge(fleet_df, on=["state", "city_norm"], how="left")
@@ -321,25 +313,18 @@ def load_dim_geography(conn, df: pd.DataFrame) -> None:
     print(f"dim_geography: {len(records)} municípios inseridos.")
 
 
+# Atualiza dim_points.geo_id com base no sufixo "Cidade/UF" presente em
+# dim_points.location (formato gerado por 04_generate_sessions.py, ex:
+# "... Jardim das Palmeiras, São Paulo/SP").
+#
+# Histórico de um bug real: a primeira versão desta função procurava o
+# nome de qualquer município cadastrado como substring solta dentro do
+# location inteiro. Isso gerou falsos positivos confirmados, como
+# "PALMEIRA" (município real do Paraná) casando dentro de "...PALMEIRAS..."
+# A correção usa apenas o sufixo explícito "/UF" no fim do location para
+# restringir a busca à UF certa, exigindo que o nome do município seja a
+# última cidade mencionada antes do "/UF", não uma substring solta.
 def link_points_to_geography(conn) -> None:
-    """Atualiza dim_points.geo_id apontando para o município correto, com
-    base no sufixo 'Cidade/UF' presente no texto de dim_points.location
-    (formato gerado por 04_generate_sessions.py, ex: '... - São Paulo/SP').
-
-    IMPORTANTE — histórico de um bug real encontrado em execução: a
-    primeira versão desta função procurava o nome de QUALQUER município
-    cadastrado como substring solta dentro do location inteiro. Isso
-    gerou dois falsos positivos confirmados:
-      - 'PALMEIRA' (município real do Paraná) casou dentro de
-        '...Jardim das PALMEIRAS...' (plural, prefixo compartilhado).
-      - Nomes compostos como 'Bela Vista do Paraíso' também são um risco
-        de colisão com qualquer texto livre contendo 'Bela Vista'.
-    A correção usa apenas o sufixo explícito '/UF' no fim do location
-    (que 04_generate_sessions.py sempre inclui) para restringir a busca
-    à UF certa primeiro, e exige que o nome do município apareça como
-    a última cidade mencionada antes do '/UF' — não como substring solta
-    em qualquer lugar do texto.
-    """
     with conn.cursor() as cur:
         cur.execute("SELECT point_id, location FROM dim_points WHERE geo_id IS NULL")
         points = cur.fetchall()
@@ -350,8 +335,8 @@ def link_points_to_geography(conn) -> None:
     # colisão entre municípios de estados diferentes.
     geo_index = {(state, normalize_name(city)): geo_id for geo_id, city, state in geos}
 
-    # Padrão: "... - Cidade Nome/UF" no final da string.
-    suffix_pattern = re.compile(r"-\s*([^-/]+?)\s*/\s*([A-Z]{2})\s*$")
+    # Padrão: "..., Cidade Nome/UF" no final da string.
+    suffix_pattern = re.compile(r"[,\-]\s*([^,\-/]+?)\s*/\s*([A-Z]{2})\s*$")
 
     updates = []
     unresolved = []
@@ -374,8 +359,7 @@ def link_points_to_geography(conn) -> None:
         conn.commit()
     print(f"dim_points: {len(updates)} de {len(points)} pontos vinculados a um geo_id.")
     if unresolved:
-        print("  Pontos não resolvidos (sem sufixo '- Cidade/UF' reconhecível ou "
-              "município fora do escopo carregado):")
+        print("  Não resolvidos (sem sufixo 'Cidade/UF' reconhecível ou fora do escopo):")
         for point_id, location in unresolved:
             print(f"    {point_id}: {location!r}")
 
@@ -383,7 +367,6 @@ def link_points_to_geography(conn) -> None:
 def main() -> None:
     result_df, report = build_dim_geography()
 
-    print("\nConectando ao Postgres...")
     conn = psycopg2.connect(**DB_CONFIG)
     try:
         load_dim_geography(conn, result_df)
@@ -397,7 +380,7 @@ def main() -> None:
     print(f"Com frota BEV/PHEV (RENAVAM) > 0: {report['com_frota_renavam']}")
     sem_populacao = report["municipios_ibge"] - report["com_populacao"]
     if sem_populacao > 0:
-        print(f"AVISO: {sem_populacao} municípios ficaram sem população resolvida "
+        print(f"AVISO: {sem_populacao} municípios sem população resolvida "
               f"(falha pontual da API de Agregados ou município sem série disponível).")
 
 

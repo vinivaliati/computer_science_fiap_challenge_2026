@@ -21,7 +21,7 @@ Casos excepcionais:
     fatura inteira do usuário naquele mês é marcada com status='revisao'
     em vez de 'pendente', para checagem manual antes do envio.
 
-Gera fct_invoices para todo o período já presente em fct_sessoes (mar-ago/2026).
+Gera fct_invoices para todo o período já presente em fct_sessoes (mar a ago/2026).
 
 Uso:
     export POSTGRES_HOST=localhost
@@ -46,8 +46,8 @@ DB_CONFIG = {
 }
 
 
+# Carrega as tarifas de cada plano num dict indexado por plan_type.
 def fetch_plans(conn) -> dict:
-    """Carrega as tarifas de cada plano num dict indexado por plan_type."""
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute("""
             SELECT plan_type, rate_per_min, rate_per_min_discounted,
@@ -58,10 +58,9 @@ def fetch_plans(conn) -> dict:
         return {row["plan_type"]: row for row in cur.fetchall()}
 
 
+# Agrega sessões por usuário/mês/plano, a granularidade da fatura.
+# Também traz se houve alguma sessão anômala no mês (marca a fatura como revisão).
 def fetch_session_aggregates(conn) -> list[dict]:
-    """Agrega as sessões por usuário/mês/plano — a granularidade que a
-    fatura precisa. Também carrega se há alguma sessão anômala no mês
-    (para marcar a fatura como 'revisao')."""
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute("""
             SELECT
@@ -79,11 +78,10 @@ def fetch_session_aggregates(conn) -> list[dict]:
         return cur.fetchall()
 
 
+# Todos os usuários ativos e seu plano. Necessário para o cenário "sem
+# sessão no mês", que não aparece na agregação mas ainda pode gerar
+# fatura (assinatura e pacote cobram taxa fixa independentemente do uso).
 def fetch_all_users_with_plans(conn) -> list[dict]:
-    """Todos os usuários ativos e seu plano — necessário para o cenário
-    'usuário sem sessão no mês', que não aparece na agregação de sessões
-    mas ainda pode precisar de fatura (caso assinatura/pacote, que cobram
-    taxa fixa independentemente do uso)."""
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute("""
             SELECT user_id, plan_type
@@ -99,10 +97,10 @@ def fetch_distinct_months(conn) -> list:
         return [row[0] for row in cur.fetchall()]
 
 
+# Aplica a fórmula do plano. condominio_users_count só é usado no
+# pacote_condominial (rateio igualitário do custo fixo).
 def calculate_invoice_amount(plan_type: str, plans: dict, duration_min: float,
                               condominio_users_count: int) -> float:
-    """Aplica a fórmula do plano. condominio_users_count só é usado para
-    pacote_condominial (rateio igualitário do custo fixo)."""
     plan = plans[plan_type]
 
     if plan_type == "pay_per_use":
@@ -126,8 +124,8 @@ def build_invoices(session_aggregates: list[dict], all_users: list[dict],
     # Índice de agregados por (user_id, ref_month) para lookup rápido.
     agg_index = {(row["user_id"], row["ref_month"]): row for row in session_aggregates}
 
-    # Conta quantos usuários distintos têm sessão no pacote_condominial,
-    # por mês — usado para ratear o custo fixo.
+    # Conta usuários distintos com sessão no pacote_condominial, por mês,
+    # para ratear o custo fixo.
     condominio_users_by_month: dict = {}
     for row in session_aggregates:
         if row["plan_type"] == "pacote_condominial":
@@ -147,10 +145,9 @@ def build_invoices(session_aggregates: list[dict], all_users: list[dict],
             total_kwh = float(agg["total_kwh"]) if has_usage else 0.0
             has_anomaly = bool(agg["has_anomaly"]) if has_usage else False
 
-            # Cenário excepcional: usuário sem uso no mês.
-            #   - pay_per_use: sem cobrança -> sem fatura.
-            #   - assinatura / pacote_condominial: cobra a taxa fixa mesmo
-            #     sem uso (conforme regra da Sprint 01).
+            # Cenário: usuário sem uso no mês.
+            #   pay_per_use: sem cobrança, sem fatura.
+            #   assinatura / pacote_condominial: cobra a taxa fixa mesmo sem uso.
             if not has_usage and plan_type == "pay_per_use":
                 continue
 
@@ -215,25 +212,16 @@ def print_summary(invoices: list[dict]) -> None:
 
 
 def main() -> None:
-    print("Conectando ao Postgres em", f"{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['dbname']}...")
     conn = psycopg2.connect(**DB_CONFIG)
 
     try:
-        print("\nCarregando planos, sessões agregadas e usuários...")
         plans = fetch_plans(conn)
         session_aggregates = fetch_session_aggregates(conn)
         all_users = fetch_all_users_with_plans(conn)
         months = fetch_distinct_months(conn)
 
-        print(f"  {len(plans)} planos, {len(session_aggregates)} combinações usuário/mês/plano com uso, "
-              f"{len(all_users)} usuários, {len(months)} meses distintos.")
-
-        print("\nCalculando faturas...")
         invoices = build_invoices(session_aggregates, all_users, plans, months)
-
-        print("\nInserindo em fct_invoices...")
         load_invoices(conn, invoices)
-
         print_summary(invoices)
 
     finally:

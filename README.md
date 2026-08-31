@@ -1,256 +1,323 @@
-# EV ChargeOps — Sprint 01
+# EV ChargeOps
 
-**Enterprise Challenge 2026 · GoodWe × FIAP · Equipe 35**
+Enterprise Challenge 2026, parceria GoodWe e FIAP, Equipe 35.
+
+Plataforma de gestão de recarga de veículos elétricos para condomínios e prédios
+corporativos: sessões estruturadas por usuário, rateio automatizado, cobrança
+transparente e modelos de IA de apoio à operação, tudo validado sobre o carregador
+piloto GoodWe HCA G2.
+
+## Equipe
 
 | Nome | RM |
-|------|----|
+|---|---|
 | Arthur Apolonio de Oliveira | rm571385 |
 | Matheus Bejarano da Costa Resende | rm569195 |
 | Dayvid Daniel Duarte Ramos | rm569482 |
 | Bryan Lima Garcia | rm573611 |
 | Vinicius Valiati Costa | rm568674 |
 
----
+## Links do projeto
 
-## O Problema
+Preencha os links abaixo assim que estiverem disponíveis publicamente.
 
-O crescimento da frota de veículos elétricos no Brasil é acelerado e consistente. Em maio de 2026, os eletrificados já representavam 17% das vendas de automóveis leves ante 7,8% no mesmo período de 2025. Esse crescimento chega inevitavelmente nos condomínios residenciais e edifícios corporativos, que passam a receber múltiplas solicitações de instalação de carregadores em vagas privativas e áreas comuns.
+| Item | Link |
+|---|---|
+| Painel do gestor (Power BI) | *(colar link aqui)* |
+| Dashboard de IA (Streamlit) | *(colar link aqui)* |
+| App do usuário (Streamlit) | *https://app.powerbi.com/view?r=eyJrIjoiYWQwZTlmOWUtOGM3NC00ZTUxLTg1ZjAtZmRkYzM2NWZkNDE2IiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9* |
 
-O problema é operacional: infraestruturas de recarga compartilhadas não têm mecanismos para estruturar sessões por usuário, calcular consumo individual e aplicar regras de cobrança justas. Sem gestão, o custo vai para a conta coletiva e é dividido entre todos inclusive quem não tem veículo elétrico. Com instalações desordenadas, o risco de sobrecarga elétrica aumenta e o acesso para novos moradores fica comprometido.
+## Sobre o problema
 
-O EV ChargeOps transforma cada sessão de recarga em dados estruturados que alimentam um sistema de cobrança automatizado, transparente e escalável. O piloto é o carregador GoodWe HCA G2 instalado no campus da FIAP a base para validar a solução antes de levá-la a condomínios e prédios corporativos.
+O crescimento da frota elétrica no Brasil chega aos condomínios sem que exista
+infraestrutura de gestão para acompanhar. Sem medição individual, o custo da
+energia vai para a conta coletiva, dividido entre todos os moradores, mesmo os
+que não têm veículo elétrico. Sem coordenação central, o risco de sobrecarga
+elétrica aumenta e o acesso para novos moradores fica comprometido.
 
----
+O EV ChargeOps resolve isso transformando cada sessão de recarga em dado
+estruturado, alimentando um motor de cobrança automatizado e modelos de IA que
+apoiam decisões operacionais e comerciais do gestor.
 
-## Frente 1 — Contexto e Problema
+## O que este projeto entrega
 
-### Crescimento da frota no Brasil
+O projeto foi construído em etapas incrementais, cada uma validada com dados
+reais antes de avançar para a próxima. Abaixo, o resumo de cada camada.
 
-A frota acumulada de veículos elétricos no Brasil ultrapassou 705 mil unidades em março de 2026. Em todo o ano de 2025, foram 223.912 emplacamentos recorde histórico. O ritmo em 2026 aponta para superar esse número: só no primeiro trimestre, 83.947 unidades foram emplacadas.
+### 1. Fontes de dados externas
 
-| Ano | Emplacamentos | Destaque |
-|-----|--------------|----------|
-| 2023 | 94.347 | Primeiro ano acima de 90 mil |
-| 2024 | 148.621 | Crescimento de 57% sobre 2023 |
-| 2025 | 223.912 | Recorde histórico |
-| Jan–Mar 2026 | 83.947 | Ritmo de ~28 mil/mês |
+Três fontes públicas foram exploradas e integradas:
 
-A concentração geográfica é relevante para o modelo de expansão da plataforma. São Paulo lidera com 181.305 unidades, seguido por Distrito Federal (48.502) e Rio de Janeiro (39.295). O Sudeste concentra 44,2% de todas as vendas onde a demanda por infraestrutura compartilhada é mais urgente.
+* **Open Charge Map**: cobertura de eletropostos públicos no Brasil.
+* **IBGE**: hierarquia de municípios e estimativas de população, via API de
+  Localidades e API de Agregados (SIDRA).
+* **RENAVAM** (Ministério dos Transportes): frota de veículos por UF e
+  município, usada para identificar veículos BEV (elétricos puros) e PHEV
+  (híbridos plug in) por convenção de sufixo no nome do modelo, já que o
+  dataset não traz uma coluna oficial de tipo de combustível.
 
-Em setembro de 2025, o Brasil contava com 16.880 eletropostos públicos e semipúblicos. A proporção é de aproximadamente um eletroposto para cada 40 veículos elétricos, o que confirma que a maior parte das recargas acontece em ambientes privados condomínios, estacionamentos corporativos e residências. Esse é o mercado que o EV ChargeOps endereça.
+A fonte originalmente prevista para dados de frota (ABVE) foi descartada
+durante a exploração: seus dados são exibidos apenas em painéis de BI
+embutidos via iframe, sem HTML tabular, API ou CSV disponível para consumo
+programático. O RENAVAM assumiu esse papel por oferecer dado aberto real e
+estruturado. O histórico completo dessa decisão e outras descobertas de
+formato estão documentados em `docs/fontes-externas.md`.
 
-### Desafios em infraestruturas compartilhadas
+### 2. Dataset simulado
 
-Os principais problemas identificados em condomínios e prédios corporativos:
+Como o carregador físico ainda não gera dados reais durante o desenvolvimento,
+foi construído um gerador sintético (`scripts/04_generate_sessions.py`) que
+produz seis meses de sessões de recarga para 150 usuários, distribuídos entre
+os três planos de cobrança e quatro pontos de recarga.
 
-- Sem medição individual, o custo da energia vai para a conta coletiva e é dividido entre todos os moradores, independente do uso
-- Instalações feitas sem coordenação central criam risco de sobrecarga elétrica e desigualdade de acesso
-- Sem controle de sessões, não há histórico de uso por usuário nem base para cobrança
-- Usuários não têm visibilidade do próprio consumo nem projeção de custo mensal
+O gerador reproduz de forma controlada os cenários excepcionais que o motor de
+rateio precisa tratar: sessões interrompidas, usuários sem uso em algum mês,
+unidades com dois veículos cadastrados e sessões com consumo fora do padrão
+(anomalias). Cada cenário tem sua proporção documentada no próprio script e
+foi validado estatisticamente após a geração, checando físicamente que nenhuma
+sessão entrega mais energia do que a potência do ponto permite em relação ao
+tempo de carregamento.
 
-### Como funciona uma sessão de recarga
+### 3. Star schema
 
-1. O usuário conecta o cabo e se autentica via cartão RFID ou app
-2. O carregador confirma a identidade e registra o início da sessão
-3. A energia é transferida ao veículo; o medidor individual registra o consumo a cada 5 minutos
-4. O usuário desconecta o cabo ou encerra pelo app
-5. A sessão é fechada com tempo total, energia entregue e custo calculado
+O modelo de dados segue o desenho star schema, com duas tabelas fato e seis
+dimensões.
 
-### Modelos de cobrança no mercado
+![Diagrama do star schema](docs/star_schema.svg)
 
-| Modelo | Como funciona | Usado por |
-|--------|--------------|-----------|
-| Pay-per-use por tempo | Cobrança por minuto conectado | Maioria dos operadores independentes |
-| Pay-per-use por kWh | Cobrança pelo consumo real | Redes públicas como ChargePoint e Zaptec |
-| Assinatura individual | Taxa fixa + tarifa reduzida por minuto | Wallbox, Neocharge |
-| Pacote condominial | Contrato com o condomínio, tarifa reduzida para todos os moradores | Modelo emergente no Brasil |
+**Tabelas fato**
 
-O EV ChargeOps adota os três últimos modelos de forma complementar, detalhados na Frente 3.
+* `fct_sessoes`: uma linha por sessão de recarga, no grão do veículo.
+* `fct_invoices`: uma linha por fatura mensal de cada usuário.
 
----
+**Tabelas dimensão**
 
-## Frente 2 — Base Regulatória e Técnica
+* `dim_users`: cadastro de moradores.
+* `dim_vehicles`: um veículo por linha, permitindo que uma mesma unidade
+  tenha dois veículos com tipos diferentes (BEV ou PHEV).
+* `dim_points`: carregadores físicos instalados.
+* `dim_plans`: tarifas e regras de cada plano de cobrança.
+* `dim_dates`: grão diário, com o primeiro dia do mês (`ref_month`) já
+  calculado, usado para agregações mensais sem depender de uma dimensão
+  mensal separada.
+* `dim_geography`: contexto agregado por município, alimentado pelas três
+  fontes externas.
 
-### ANEEL — Resolução Normativa nº 1.000/2021
+O desenho evoluiu em relação ao rascunho inicial da Sprint 01: `dim_plans` e
+`dim_vehicles` foram adicionadas depois que ficou claro que o motor de rateio
+precisava de tarifas estruturadas em tabela, não fixas no código, e que o
+cenário de dois veículos por unidade exigia uma dimensão própria por veículo,
+não um atributo solto em `dim_users`.
 
-A RN 1.000/2021 é o marco regulatório federal para operação de carregadores no Brasil. Os pontos que impactam diretamente a plataforma:
+Uma decisão de modelagem que vale registrar: `fct_invoices.ref_month` não tem
+chave estrangeira direta para `dim_dates`, porque `dim_dates` tem grão diário
+e a fatura é mensal. A consulta correta para análises por mês agrupa por
+`ref_month` em vez de depender de uma relação direta entre as duas tabelas.
 
-- **Exploração comercial liberada**: qualquer pessoa jurídica pode oferecer serviços de recarga com preços livremente negociados, sem autorização específica da ANEEL
-- **Comunicação prévia à distribuidora**: instalações para uso não exclusivamente privado exigem comunicação prévia à distribuidora local
-- **Protocolos abertos obrigatórios**: equipamentos semipúblicos devem suportar o protocolo OCPP (Open Charge Point Protocol), padrão de mercado nas versões 1.6 e 2.0
+### 4. Motor de rateio
 
-A plataforma opera sobre OCPP e não realiza revenda de energia o custo é repassado ao usuário sem margem no modelo básico.
+O script `scripts/06_billing_engine.py` calcula a fatura mensal de cada
+usuário a partir das sessões registradas, aplicando a fórmula do plano
+correspondente:
 
-### Lei Estadual SP nº 18.403/2026
+* **Pay per use**: duração total do mês multiplicada pela tarifa por minuto.
+* **Assinatura**: taxa fixa mensal somada à duração multiplicada por uma
+  tarifa com desconto.
+* **Pacote condominial**: custo fixo do condomínio dividido pelo número de
+  usuários que efetivamente usaram o serviço naquele mês, somado à duração
+  multiplicada pela tarifa reduzida do pacote.
 
-Sancionada em fevereiro de 2026, a lei assegura ao condômino o direito de instalar carregador individual em vaga privativa em condomínios no Estado de São Paulo. O resultado prático é o aumento do número de condomínios com múltiplos carregadores instalados o cenário onde a gestão centralizada se torna indispensável. A lei não define critérios de rateio nem mecanismos de gestão de capacidade elétrica coletiva. Essa lacuna é o espaço que o EV ChargeOps ocupa.
+Sessões interrompidas são cobradas normalmente pelo tempo e consumo
+registrados até o corte. Faturas que incluem ao menos uma sessão marcada como
+anômala recebem status de revisão em vez de pendente, sinalizando a
+necessidade de conferência manual antes do envio.
 
-### Carregador GoodWe HCA G2
+### 5. Modelos de inteligência artificial
 
-O HCA G2 opera em 7, 11 ou 22 kW e suporta autenticação via RFID, app e PIN. As interfaces relevantes para a plataforma são a LAN para comunicação OCPP com o back-end e o RS-485 para leitura do medidor individual de consumo.
+Quatro modelos foram treinados, cada um em um notebook próprio dentro de
+`models/`, com validação contra dado real antes de qualquer conclusão.
 
-### APIs externas
+**`01_model_consumption_forecast.ipynb`, previsão de consumo**
+Regressão linear que estima o consumo em quilowatt hora e o valor da fatura
+do mês seguinte, a partir do padrão de uso do mês atual. O dataset de treino
+usa uma janela deslizante entre meses consecutivos, com separação de treino e
+teste feita por usuário, não por linha, para evitar que o mesmo usuário
+apareça nos dois conjuntos ao mesmo tempo.
 
-**Open Charge Map** — maior base pública global de eletropostos, com mais de 300 mil pontos em 100 países. Usada para mapear cobertura existente por município e identificar lacunas de infraestrutura, alimentando o modelo de expansão da plataforma.
+**`02_model_usage_profiles.ipynb`, perfis de uso**
+Agrupamento por K Means que segmenta usuários por frequência de uso, horário
+preferencial, consumo médio, duração de sessão e proporção de uso em fim de
+semana. O número de grupos foi fixado em quatro por decisão prática de
+negócio, já que a diferença estatística entre diferentes quantidades de
+grupos testadas era pequena nos dados atuais. O notebook documenta
+abertamente essa limitação: no piloto simulado, o horário de uso varia pouco
+entre usuários, então a segmentação de fato encontrada reflete
+principalmente o consumo médio por sessão.
 
-**Google Places API** — campo `evChargeOptions` retorna dados de disponibilidade em tempo real, tipo de conector e potência máxima das estações. Usada para oferecer alternativas ao usuário quando o ponto gerenciado está ocupado.
+**`03_model_anomaly_detection.ipynb`, detecção de anomalias**
+Identifica sessões com consumo, duração ou taxa de carregamento estatisticamente
+fora do padrão, usando desvio padrão calculado separadamente para cada ponto de
+recarga, já que pontos com potências diferentes não podem ser comparados na
+mesma distribuição. Validado contra o rótulo de anomalia conhecido do dataset
+simulado, o método capturou a totalidade das anomalias reais, com uma taxa de
+falsos positivos aceitável para um processo que já prevê revisão manual.
 
-**IBGE API** — dados demográficos e de domicílios por município. Cruzados com os dados de frota (ABVE) e cobertura (Open Charge Map) para calcular o score de oportunidade de expansão por região.
+**`04_model_expansion_score.ipynb`, score de expansão**
+O documento original da Sprint 01 descrevia este modelo como regressão
+logística, um método supervisionado que exige exemplos conhecidos de sucesso
+ou fracasso de expansão. Como nenhum município tem ainda um resultado real de
+expansão, o modelo foi reformulado como um índice composto, combinando frota
+de veículos elétricos, população e cobertura de eletropostos públicos em um
+único score de zero a cem por município. Frota e população aumentam o score,
+por indicarem mercado potencial. Cobertura de eletropostos públicos reduz o
+score, calculada de forma relativa à frota do município, já que o EV
+ChargeOps atua em recarga privada e a presença de rede pública reduz a lacuna
+que o produto preenche.
 
----
+### 6. Interfaces
 
-## Frente 3 — Arquitetura e IA
+**Dashboard de IA** (`app/dashboard_ia.py`)
+Aplicação Streamlit com uma aba para cada um dos quatro modelos, permitindo
+ajustar os parâmetros de entrada de forma interativa e visualizar o resultado
+imediatamente. Cada aba inclui uma seção explicando como interpretar os
+gráficos e os números apresentados.
 
-### Arquitetura da plataforma
+**App do usuário** (`app/dashboard_usuario.py`)
+Protótipo sem autenticação, com um seletor simulando a escolha de um usuário
+específico. Mostra o perfil, a fatura mais recente, o histórico de consumo e
+a previsão do mês seguinte. A seção de recomendação de plano foi desenhada
+sob a ótica do gestor: simula quanto aquele usuário pagaria em cada um dos
+três planos, dado seu padrão real de uso, e contextualiza a recomendação com
+o cluster de comportamento ao qual ele pertence.
+
+**Painel do gestor** (Power BI)
+Especificado em três documentos dentro de `docs/`: a estrutura de abas e
+visuais (`painel_gestor_especificacao.md`), as fórmulas de medidas DAX
+(`painel_gestor_formulas_dax.md`) e o mapa direto de qual medida usar em cada
+visual (`painel_gestor_mapa_visuais.md`). O painel tem quatro abas: visão
+geral, sessões, faturamento e usuários e pontos.
+
+### 7. Testes de integração
+
+O script `scripts/08_integration_test.py` roda toda a cadeia principal do
+projeto do zero, contra um banco de dados de teste isolado, verificando não
+apenas que cada etapa executa sem erro, mas que os resultados numéricos batem
+com o esperado: contagem exata de tabelas criadas, integridade referencial
+completa entre a tabela de sessões e suas cinco dimensões, e execução bem
+sucedida dos três notebooks de IA que não dependem de dados externos. O
+script cria e remove seu próprio banco de teste, sem interferir no ambiente
+de desenvolvimento.
+
+As etapas que dependem de acesso à internet, como a exploração e carga das
+três fontes externas, ficam fora deste teste automatizado e devem ser
+validadas manualmente quando houver conectividade disponível.
+
+## Estrutura do repositório
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  CAMADA FÍSICA                                      │
-│  Carregador GoodWe HCA G2  ·  Medidor Individual    │
-└────────────────────────┬────────────────────────────┘
-                         │ OCPP · RS-485
-┌────────────────────────▼────────────────────────────┐
-│  CONECTIVIDADE                                      │
-│  OCPP  ·  Open Charge Map  ·  Google Places  ·  IBGE│
-└────────────────────────┬────────────────────────────┘
-                         │
-┌────────────────────────▼────────────────────────────┐
-│  APLICAÇÃO                                          │
-│  Sessões  ·  Rateio  ·  IA  ·  Banco de Dados       │
-└────────────────────────┬────────────────────────────┘
-                         │
-┌────────────────────────▼────────────────────────────┐
-│  APRESENTAÇÃO                                       │
-│  App do Usuário  ·  Painel do Gestor  ·  Dashboard  │
-└─────────────────────────────────────────────────────┘
+ev-chargeops/
+├── app/
+│   ├── dashboard_ia.py          Dashboard de IA (Streamlit)
+│   └── dashboard_usuario.py     App do usuário (Streamlit)
+├── data/
+│   ├── raw/                     Dados brutos gerados ou baixados
+│   └── processed/                Dados tratados
+├── docs/
+│   ├── fontes-externas.md                 Descobertas da exploração de APIs
+│   ├── painel_gestor_especificacao.md     Estrutura de abas e visuais do BI
+│   ├── painel_gestor_formulas_dax.md      Fórmulas DAX do painel
+│   ├── painel_gestor_mapa_visuais.md      Mapa de visual para métrica
+│   └── star_schema.svg                    Diagrama do modelo de dados
+├── models/
+│   ├── 01_model_consumption_forecast.ipynb
+│   ├── 02_model_usage_profiles.ipynb
+│   ├── 03_model_anomaly_detection.ipynb
+│   ├── 04_model_expansion_score.ipynb
+│   └── output/                            Artefatos treinados, gerados ao rodar os notebooks
+├── scripts/
+│   ├── 01_explore_ocm.py           Exploração da API Open Charge Map
+│   ├── 02_explore_ibge.py          Exploração da API do IBGE
+│   ├── 03_explore_renavam.py       Exploração do dataset RENAVAM
+│   ├── 04_generate_sessions.py     Geração do dataset simulado
+│   ├── 05_load_star_schema.py      Carga do star schema
+│   ├── 06_billing_engine.py        Motor de rateio
+│   ├── 07_load_geography.py        Carga de dim_geography
+│   └── 08_integration_test.py      Teste de integração ponta a ponta
+├── sql/
+│   └── 01_star_schema.sql          DDL completo do banco
+├── docker-compose.yml
+├── requirements.txt
+└── .env.example
 ```
 
-### Fluxo de dados
+## Como executar
 
-```
-Usuário conecta o carro e autentica via RFID
-        ↓
-Sistema registra início da sessão
-        ↓
-Medidor envia consumo a cada 5 minutos
-        ↓
-Usuário desconecta — sessão fechada com tempo e kWh total
-        ↓
-IA valida a sessão antes de processar
-        ↓
-Motor de rateio aplica o plano do usuário e gera a fatura
-        ↓
-Usuário recebe notificação — fatura disponível no app
+### Pré-requisitos
+
+Docker e Docker Compose instalados. Python 3.12 ou superior, com um ambiente
+virtual próprio recomendado.
+
+### Subindo o banco de dados
+
+```bash
+cp .env.example .env
+docker compose up -d
 ```
 
-### Modelo de cobrança
+O Postgres sobe com o schema já criado, a partir de `sql/01_star_schema.sql`.
 
-A plataforma opera com três planos configuráveis pelo gestor:
+### Instalando as dependências Python
 
-**Pay-per-use** — plano padrão individual. Cobrança por minuto de sessão ativa. Sem mensalidade.
-
-```
-fatura = duracao_min × tarifa_por_minuto
-```
-
-**Assinatura individual** — o usuário paga uma taxa fixa mensal e obtém desconto na tarifa por minuto. Indicado para quem carrega com frequência.
-
-```
-fatura = taxa_fixa_mensal + (duracao_min × tarifa_com_desconto)
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-**Pacote condominial** — contrato firmado com o condomínio. O custo fixo de infraestrutura é maior e distribuído entre as unidades, mas a tarifa variável por minuto é a mais baixa dos três planos. Todos os moradores do condomínio se beneficiam da tarifa reduzida.
+### Populando o banco com dados simulados
 
-```
-fatura_condominio = custo_fixo_mensal + Σ(duracao_min_usuario × tarifa_condominio)
-fatura_usuario    = proporcional ao uso individual dentro do pacote
-```
+```bash
+export POSTGRES_HOST=localhost
+export POSTGRES_PORT=5432
+export POSTGRES_DB=evchargeops
+export POSTGRES_USER=evchargeops
+export POSTGRES_PASSWORD=changeme
 
-**Casos excepcionais**
-
-| Situação | Tratamento |
-|----------|-----------|
-| Sessão interrompida | Cobra pelo tempo e kWh até o encerramento; sessão marcada para auditoria |
-| Usuário sem uso no mês | Pay-per-use: sem cobrança. Assinatura: cobra apenas a taxa fixa |
-| Dois veículos na mesma unidade | Cada veículo tem ID próprio; fatura consolida o total da unidade com detalhamento por veículo |
-| Consumo fora do padrão | IA sinaliza anomalia; fatura entra em revisão antes de ser enviada |
-
-### Papel da IA
-
-**Previsão de consumo** — regressão linear sobre o histórico de sessões de cada usuário. Permite projetar o custo do mês antes do fechamento e antecipar demanda por capacidade elétrica.
-
-**Perfis de uso** — clustering K-Means agrupando usuários por frequência, horário preferencial e consumo médio. Permite ao gestor identificar usuários de pico e criar incentivos para redistribuir a carga horária.
-
-**Detecção de anomalias** — Z-score sobre as distribuições de consumo e duração. Sinaliza sessões com valores impossíveis antes que entrem no cálculo de fatura.
-
-**Score de expansão** — regressão logística combinando dados de frota por município (ABVE), cobertura de eletropostos (Open Charge Map) e densidade demográfica (IBGE). Calcula a probabilidade de sucesso de implantação em novos condomínios e municípios.
-
-### Esquema do banco de dados
-
-O banco segue o modelo star schema com duas tabelas fato e quatro dimensões.
-
-![Star Schema](./docs/star_schema.svg)
-
----
-
-## Plano para a Sprint 02
-
-Como não teremos acesso aos dados reais do carregador GoodWe durante o desenvolvimento, a sprint parte da geração de um dataset simulado que replica o comportamento esperado de sessões reais. As APIs externas entram nessa fase para enriquecer as dimensões do star schema não em tempo de execução da plataforma.
-
-Todo o pipeline de dados é implementado em Python: da ingestão das APIs externas à limpeza, transformação e carga no banco. Sem camada intermediária de orquestração, o fluxo é direto e adequado ao escopo de validação do piloto.
-
-O fluxo de dados da sprint segue essa ordem:
-
-```
-APIs externas (Open Charge Map · IBGE · ABVE)
-        ↓ ingestão e limpeza (Python)
-Script Python — geração do dataset simulado de sessões
-        ↓ transformação e montagem do star schema (Python)
-PostgreSQL (star schema populado)
-        ↓
-IA (scikit-learn)          Power BI (painel do gestor)
-Streamlit (dashboard IA)   Streamlit (app do usuário)
+python scripts/04_generate_sessions.py
+python scripts/05_load_star_schema.py
+python scripts/06_billing_engine.py
 ```
 
-**Etapa 1 — Ingestão e dados simulados**
+### Carregando dados geográficos (requer acesso à internet)
 
-Consumir as APIs externas (Open Charge Map, IBGE, ABVE) e usar Python para padronizar, limpar e carregar as dimensões geográficas e de pontos de recarga no banco. Em paralelo, desenvolver o script de geração do dataset simulado de sessões cobrindo 6 meses, múltiplos usuários, os três planos de cobrança e cenários excepcionais.
+```bash
+export OCM_API_KEY=sua_chave_aqui
+python scripts/07_load_geography.py
+```
 
-**Etapa 2 — Transformação e montagem do star schema**
+### Treinando os modelos de IA
 
-Implementar em Python as transformações que convertem os dados brutos no star schema definido na Sprint 01. Ao final dessa etapa, o banco estará populado e pronto para consumo pelos módulos seguintes.
+Cada notebook em `models/` pode ser executado individualmente pelo Jupyter ou
+via linha de comando:
 
-**Etapa 3 — Motor de rateio e IA**
+```bash
+cd models
+jupyter nbconvert --to notebook --execute --inplace 01_model_consumption_forecast.ipynb
+jupyter nbconvert --to notebook --execute --inplace 02_model_usage_profiles.ipynb
+jupyter nbconvert --to notebook --execute --inplace 03_model_anomaly_detection.ipynb
+jupyter nbconvert --to notebook --execute --inplace 04_model_expansion_score.ipynb
+```
 
-Implementar o motor de rateio em Python com os três planos e todos os casos excepcionais. Implementar os quatro modelos de IA previsão de consumo, clustering de perfis, detecção de anomalias e score de expansão consumindo diretamente o star schema.
+### Rodando os dashboards
 
-**Etapa 4 — Interfaces**
+```bash
+streamlit run app/dashboard_ia.py
+streamlit run app/dashboard_usuario.py
+```
 
-Desenvolver o painel do gestor no Power BI conectado ao PostgreSQL, o dashboard de IA e o app do usuário em Streamlit. Testes de integração ponta a ponta.
+### Rodando o teste de integração
 
-| Camada | Tecnologia |
-|--------|-----------|
-| Ingestão e geração de dados | Python |
-| Transformação e carga | Python |
-| Banco de dados | PostgreSQL |
-| IA | Python · scikit-learn |
-| Painel do gestor | Power BI |
-| Dashboard de IA e app do usuário | Streamlit |
-| APIs externas | Open Charge Map · Google Places · IBGE · ANEEL Open Data |
+```bash
+python scripts/08_integration_test.py
+```
 
----
-
-## Fontes
-
-- ABVE — Estatísticas de emplacamentos 2023–2026. Disponível em: abve.org.br/abve-data
-- SMABC — Frota de eletrificados ultrapassa 700 mil unidades. Abr/2026. Disponível em: smabc.org.br
-- Bem Paraná — Participação de eletrificados chega a 17% em mai/2026. Jun/2026. Disponível em: bemparana.com.br
-- ANEEL — Resolução Normativa nº 1.000/2021. Disponível em: aneel.gov.br
-- ANEEL — Portal de Dados Abertos. Disponível em: dadosabertos.aneel.gov.br
-- Assembleia Legislativa SP — Lei nº 18.403/2026. Disponível em: al.sp.gov.br
-- Migalhas — Lei 18.403/26: recarga de EVs em condomínios. Mar/2026. Disponível em: migalhas.com.br
-- VoltBras — Modelos de cobrança para recarga compartilhada. Disponível em: voltbras.com
-- GoodWe — HCA G2 Series EV Charger, User Manual v1.5. Disponível em: goodwe.com
-- Open Charge Map — Documentação da API. Disponível em: openchargemap.org/site/develop
-- Google for Developers — Places API (New): evChargeOptions. Disponível em: developers.google.com/maps/documentation/places
-- IBGE — API de Serviço de Dados. Disponível em: servicodados.ibge.gov.br/api/docs

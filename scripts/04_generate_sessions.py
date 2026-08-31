@@ -2,7 +2,7 @@
 EV ChargeOps — Geração do dataset simulado de sessões
 
 Objetivo: gerar um dataset sintético de sessões de recarga cobrindo 6 meses
-(março–agosto/2026), múltiplos usuários, os 3 planos de cobrança e os
+(março a agosto/2026), múltiplos usuários, os 3 planos de cobrança e os
 cenários excepcionais descritos na Sprint 01:
   - Sessão interrompida
   - Usuário sem uso no mês
@@ -12,7 +12,7 @@ cenários excepcionais descritos na Sprint 01:
 Escopo (definido com o time):
   - 150 usuários
   - 4 pontos de recarga (simulando condomínios/prédios diferentes)
-  - Distribuição realista de planos: maioria pay-per-use, menos em
+  - Distribuição realista de planos: maioria pay per use, menos em
     assinatura individual, poucos no pacote condominial
   - Período: 2026-03-01 a 2026-08-31
 
@@ -47,9 +47,9 @@ N_POINTS = 4
 PERIOD_START = date(2026, 3, 1)
 PERIOD_END = date(2026, 8, 31)
 
-# Distribuição realista de planos: a maioria paga por uso avulso, uma fatia
-# menor assina um plano fixo, e pouquíssimos estão num pacote condominial
-# (que exige contrato do condomínio inteiro, não é adesão individual).
+# Maioria paga por uso avulso, uma fatia menor assina plano fixo, e
+# pouquíssimos estão no pacote condominial (exige contrato do condomínio
+# inteiro, não é adesão individual).
 PLAN_WEIGHTS = {
     "pay_per_use": 0.65,
     "assinatura": 0.25,
@@ -58,17 +58,17 @@ PLAN_WEIGHTS = {
 
 POINT_MODELS = ["GoodWe HCA G2"] * N_POINTS
 POINT_LOCATIONS = [
-    "Residencial Jardim das Palmeiras - Garagem G1 - São Paulo/SP",
-    "Edifício Bela Vista - Subsolo 2 - São Paulo/SP",
-    "Condomínio Parque das Águas - Vaga Coletiva - Rio de Janeiro/RJ",
-    "Campus FIAP - Estacionamento Docente - São Paulo/SP",
+    "Residencial Jardim das Palmeiras, Garagem G1, São Paulo/SP",
+    "Edifício Bela Vista, Subsolo 2, São Paulo/SP",
+    "Condomínio Parque das Águas, Vaga Coletiva, Rio de Janeiro/RJ",
+    "Campus FIAP, Estacionamento Docente, São Paulo/SP",
 ]
 POINT_POWER_KW = [22.0, 11.0, 22.0, 7.4]
 
 
+# Tarifas de cada plano, conforme as fórmulas da Sprint 01 (Frente 3).
+# Valores de referência de mercado, ajustáveis depois.
 def generate_plans() -> pd.DataFrame:
-    """Tarifas de cada plano, conforme as fórmulas definidas na Sprint 01
-    (Frente 3). Valores de referência de mercado — ajustáveis depois."""
     return pd.DataFrame([
         {
             "plan_type": "pay_per_use",
@@ -123,7 +123,7 @@ def generate_users(points_df: pd.DataFrame) -> pd.DataFrame:
     for i in range(N_USERS):
         user_id = f"U{i+1:04d}"
         plan_type = np.random.choice(plan_choices, p=plan_probs)
-        # Usuário é vinculado a um ponto de recarga (seu condomínio/prédio).
+        # Usuário vinculado a um ponto de recarga (seu condomínio/prédio).
         point_id = random.choice(points_df["point_id"].tolist())
 
         rows.append({
@@ -140,17 +140,14 @@ def generate_users(points_df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-# Distribuição de tipo de veículo entre a frota simulada, com base na
-# proporção BEV/PHEV observada na exploração real do RENAVAM (Etapa 2):
+# Proporção BEV/PHEV baseada na exploração real do RENAVAM (Etapa 2):
 # BEV bem mais comum que PHEV no mercado brasileiro atual.
 VEHICLE_TYPE_WEIGHTS = {"BEV": 0.70, "PHEV": 0.30}
 
 
+# 1 linha por veículo. ~8% das unidades ganham um segundo veículo (V2),
+# cobrindo o cenário de "dois veículos na mesma unidade" da Sprint 01.
 def generate_vehicles(users_df: pd.DataFrame) -> pd.DataFrame:
-    """1 linha por veículo. A maioria dos usuários tem só 1 veículo (V1,
-    primário); ~8% das unidades têm um segundo veículo cadastrado (V2,
-    secundário) — o cenário excepcional de 'dois veículos na mesma
-    unidade' descrito na Sprint 01."""
     vehicle_type_choices = list(VEHICLE_TYPE_WEIGHTS.keys())
     vehicle_type_probs = list(VEHICLE_TYPE_WEIGHTS.values())
 
@@ -184,9 +181,9 @@ def month_range(start: date, end: date) -> list[date]:
     return months
 
 
+# Sorteia data e hora com viés realista: mais provável à noite (chegada em
+# casa) e uma cauda menor pela manhã.
 def random_session_datetime(month_start: date) -> datetime:
-    """Gera um horário de sessão com viés realista: mais provável à noite
-    (quando o morador chega em casa) e nos dias úteis."""
     if month_start.month == 12:
         next_month = date(month_start.year + 1, 1, 1)
     else:
@@ -195,13 +192,12 @@ def random_session_datetime(month_start: date) -> datetime:
     day_offset = random.randint(0, days_in_month - 1)
     session_date = month_start + timedelta(days=day_offset)
 
-    # Horário de início: pico entre 18h e 23h (chegada em casa à noite),
-    # com uma cauda menor pela manhã (quem carrega antes de sair).
+    # Pico entre 18h e 23h, cauda menor pela manhã (quem carrega antes de sair).
     hour_weights = np.array([
-        0.5, 0.3, 0.2, 0.2, 0.2, 0.3,  # 0-5h
-        0.8, 1.2, 1.0, 0.6, 0.5, 0.5,  # 6-11h
-        0.5, 0.5, 0.5, 0.5, 0.6, 0.8,  # 12-17h
-        1.5, 2.5, 2.8, 2.2, 1.5, 0.9,  # 18-23h
+        0.5, 0.3, 0.2, 0.2, 0.2, 0.3,  # 0h a 5h
+        0.8, 1.2, 1.0, 0.6, 0.5, 0.5,  # 6h a 11h
+        0.5, 0.5, 0.5, 0.5, 0.6, 0.8,  # 12h a 17h
+        1.5, 2.5, 2.8, 2.2, 1.5, 0.9,  # 18h a 23h
     ])
     hour = np.random.choice(range(24), p=hour_weights / hour_weights.sum())
     minute = random.randint(0, 59)
@@ -213,23 +209,22 @@ def generate_sessions(users_df: pd.DataFrame, points_df: pd.DataFrame, vehicles_
     power_by_point = dict(zip(points_df["point_id"], points_df["power_kw"]))
     months = month_range(PERIOD_START, PERIOD_END)
 
-    # Agrupa vehicle_id por user_id, para sortear entre os veículos reais
-    # daquele usuário (1 ou 2) em vez de assumir um V1/V2 fixo.
+    # Agrupa vehicle_id por user_id para sortear entre os veículos reais
+    # daquele usuário, em vez de assumir V1/V2 fixo.
     vehicles_by_user = vehicles_df.groupby("user_id")["vehicle_id"].apply(list).to_dict()
 
     sessions = []
     session_counter = 1
 
     for _, user in users_df.iterrows():
-        # Frequência de uso mensal varia por usuário (alguns carregam quase
-        # todo dia útil, outros só esporadicamente).
+        # Frequência mensal varia por usuário (uns carregam quase todo dia
+        # útil, outros só esporadicamente).
         base_sessions_per_month = max(1, int(np.random.normal(loc=10, scale=4)))
         vehicle_ids = vehicles_by_user[user["user_id"]]
 
         for month_start in months:
-            # Cenário excepcional: usuário sem uso no mês (~7% de chance
-            # por usuário-mês, mais provável em planos pay-per-use, já que
-            # não têm taxa fixa obrigando o uso).
+            # Cenário: usuário sem uso no mês. Mais provável em pay per use,
+            # já que não tem taxa fixa obrigando o uso.
             skip_probability = 0.10 if user["plan_type"] == "pay_per_use" else 0.03
             if random.random() < skip_probability:
                 continue
@@ -241,31 +236,24 @@ def generate_sessions(users_df: pd.DataFrame, points_df: pd.DataFrame, vehicles_
                 start_dt = random_session_datetime(month_start)
 
                 power_kw = power_by_point[user["point_id"]]
-                # Duração típica de sessão: 30min a 4h, com maior massa em
-                # torno de 1-2h (recarga noturna parcial).
+                # Duração típica: 30min a 4h, maior massa em 1 a 2h (recarga noturna parcial).
                 duration_min = max(10, int(np.random.gamma(shape=3, scale=35)))
 
-                # kWh entregue é proporcional à potência do ponto e à
-                # duração, com alguma perda/variação realista.
+                # kWh proporcional à potência e duração, com perda/variação realista.
                 theoretical_kwh = power_kw * (duration_min / 60) * random.uniform(0.75, 0.95)
 
-                # Cenário excepcional: sessão interrompida (~4% das sessões).
-                # Cobra pelo tempo/kWh até o encerramento; fica marcada para
-                # auditoria conforme a regra de negócio da Sprint 01.
+                # Cenário: sessão interrompida (~4%). Cobra pelo tempo/kWh
+                # até o encerramento e fica marcada para auditoria.
                 is_interrupted = random.random() < 0.04
                 status = "interrompida" if is_interrupted else "concluida"
                 if is_interrupted:
-                    # Interrompe em algum ponto entre 10% e 70% da sessão planejada.
                     cutoff = random.uniform(0.1, 0.7)
                     duration_min = max(5, int(duration_min * cutoff))
                     theoretical_kwh = theoretical_kwh * cutoff
 
-                # Cenário excepcional: consumo fora do padrão / anomalia
-                # (~2% das sessões). Simula erro de medição ou uso atípico
-                # (ex: veículo com bateria maior que o normal, falha no
-                # medidor). É sinalizado para revisão, não é um erro do
-                # gerador — é o cenário que a IA de detecção de anomalias
-                # (Etapa 7) deve conseguir capturar.
+                # Cenário: anomalia (~2%). Simula erro de medição ou uso
+                # atípico. Não é bug do gerador, é o caso que a IA de
+                # detecção de anomalias (Etapa 7) precisa capturar.
                 is_anomaly = random.random() < 0.02
                 if is_anomaly:
                     theoretical_kwh = theoretical_kwh * random.uniform(2.5, 4.0)
