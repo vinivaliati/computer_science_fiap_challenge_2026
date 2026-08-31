@@ -1,1 +1,235 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="1400" height="900"><rect x="0" y="0" width="1400" height="900" fill="white"/><g><rect x="560" y="380" width="260" height="206" rx="6" fill="#FFF3E0" stroke="#D85A30" stroke-width="1"/><rect x="560" y="380" width="260" height="26" rx="6" fill="#D85A30"/><rect x="560" y="400" width="260" height="6" fill="#D85A30"/><text x="690.0" y="393.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">fct_sessoes (FATO)</text><text x="570" y="415.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">session_id PK</text><text x="570" y="433.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">user_id FK</text><text x="570" y="451.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">vehicle_id FK</text><text x="570" y="469.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">point_id FK</text><text x="570" y="487.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">session_date FK</text><text x="570" y="505.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">plan_type FK</text><text x="570" y="523.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">duration_min</text><text x="570" y="541.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">kwh_delivered</text><text x="570" y="559.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">status</text><text x="570" y="577.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">anomaly_flag</text></g><g><rect x="560" y="640" width="260" height="152" rx="6" fill="#FFF3E0" stroke="#D85A30" stroke-width="1"/><rect x="560" y="640" width="260" height="26" rx="6" fill="#D85A30"/><rect x="560" y="660" width="260" height="6" fill="#D85A30"/><text x="690.0" y="653.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">fct_invoices (FATO)</text><text x="570" y="675.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">invoice_id PK</text><text x="570" y="693.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">user_id FK</text><text x="570" y="711.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">ref_month</text><text x="570" y="729.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">plan_type FK</text><text x="570" y="747.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">total_kwh</text><text x="570" y="765.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">total_amount</text><text x="570" y="783.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">status</text></g><g><rect x="60" y="60" width="220" height="134" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/><rect x="60" y="60" width="220" height="26" rx="6" fill="#0F6E56"/><rect x="60" y="80" width="220" height="6" fill="#0F6E56"/><text x="170.0" y="73.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">dim_users</text><text x="70" y="95.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">user_id PK</text><text x="70" y="113.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">name</text><text x="70" y="131.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">email</text><text x="70" y="149.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">unit</text><text x="70" y="167.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">plan_type</text><text x="70" y="185.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">point_id</text></g><g><rect x="60" y="320" width="220" height="98" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/><rect x="60" y="320" width="220" height="26" rx="6" fill="#0F6E56"/><rect x="60" y="340" width="220" height="6" fill="#0F6E56"/><text x="170.0" y="333.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">dim_vehicles</text><text x="70" y="355.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">vehicle_id PK</text><text x="70" y="373.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">user_id FK</text><text x="70" y="391.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">vehicle_type</text><text x="70" y="409.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">is_primary</text></g><g><rect x="60" y="540" width="220" height="152" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/><rect x="60" y="540" width="220" height="26" rx="6" fill="#0F6E56"/><rect x="60" y="560" width="220" height="6" fill="#0F6E56"/><text x="170.0" y="553.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">dim_dates</text><text x="70" y="575.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">session_date PK</text><text x="70" y="593.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">ref_month</text><text x="70" y="611.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">day_of_week</text><text x="70" y="629.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">month_name</text><text x="70" y="647.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">year</text><text x="70" y="665.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">quarter</text><text x="70" y="683.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">is_weekend</text></g><g><rect x="1080" y="60" width="260" height="170" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/><rect x="1080" y="60" width="260" height="26" rx="6" fill="#0F6E56"/><rect x="1080" y="80" width="260" height="6" fill="#0F6E56"/><text x="1210.0" y="73.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">dim_points</text><text x="1090" y="95.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">point_id PK</text><text x="1090" y="113.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">model</text><text x="1090" y="131.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">location</text><text x="1090" y="149.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">power_kw</text><text x="1090" y="167.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">protocol</text><text x="1090" y="185.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">status</text><text x="1090" y="203.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">installed_at</text><text x="1090" y="221.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">geo_id FK</text></g><g><rect x="1080" y="340" width="260" height="152" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/><rect x="1080" y="340" width="260" height="26" rx="6" fill="#0F6E56"/><rect x="1080" y="360" width="260" height="6" fill="#0F6E56"/><text x="1210.0" y="353.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">dim_plans</text><text x="1090" y="375.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">plan_type PK</text><text x="1090" y="393.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">description</text><text x="1090" y="411.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">rate_per_min</text><text x="1090" y="429.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">rate_per_min_discounted</text><text x="1090" y="447.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">monthly_fee</text><text x="1090" y="465.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">fixed_cost_monthly</text><text x="1090" y="483.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">active</text></g><g><rect x="1080" y="620" width="260" height="170" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/><rect x="1080" y="620" width="260" height="26" rx="6" fill="#0F6E56"/><rect x="1080" y="640" width="260" height="6" fill="#0F6E56"/><text x="1210.0" y="633.0" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#FFFFFF" font-family="sans-serif">dim_geography</text><text x="1090" y="655.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">geo_id PK</text><text x="1090" y="673.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">city</text><text x="1090" y="691.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">state</text><text x="1090" y="709.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">ibge_municipio_id</text><text x="1090" y="727.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">population_estimate</text><text x="1090" y="745.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">ev_fleet_bev_count</text><text x="1090" y="763.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">ev_fleet_phev_count</text><text x="1090" y="781.0" dominant-baseline="central" font-size="11" fill="#2C2C2A" font-family="monospace">chargepoints_count</text></g><line x1="280" y1="100" x2="560" y2="420" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="280" y1="360" x2="560" y2="460" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="280" y1="570" x2="560" y2="500" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="1080" y1="130" x2="820" y2="440" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="1080" y1="420" x2="820" y2="480" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="280" y1="100" x2="560" y2="700" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="1080" y1="420" x2="820" y2="700" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="280" y1="380" x2="60" y2="320" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/><line x1="1150" y1="300" x2="1150" y2="620" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">Modelo dimensional de dados</title>
+  <desc id="desc">Diagrama de relacionamentos entre dimensões, tabelas fato e medidas.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#eef2f7"/>
+    </linearGradient>
+    <linearGradient id="fact" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#115e59"/>
+    </linearGradient>
+    <linearGradient id="dim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="measure" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#0f172a" flood-opacity=".12"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity=".10"/>
+    </filter>
+    <style>
+      .title{font:700 26px Inter,Segoe UI,Arial,sans-serif;fill:#0f172a}
+      .subtitle{font:400 13px Inter,Segoe UI,Arial,sans-serif;fill:#64748b}
+      .table-title{font:700 14px Inter,Segoe UI,Arial,sans-serif;fill:#fff}
+      .field{font:400 12px Inter,Segoe UI,Arial,sans-serif;fill:#334155}
+      .field-light{font:400 12px Inter,Segoe UI,Arial,sans-serif;fill:#475569}
+      .cardinal{font:700 11px Inter,Segoe UI,Arial,sans-serif;fill:#0f766e}
+      .legend{font:500 11px Inter,Segoe UI,Arial,sans-serif;fill:#475569}
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="820" rx="22" fill="url(#bg)"/>
+  <circle cx="1290" cy="720" r="180" fill="#0f766e" opacity=".035"/>
+  <circle cx="110" cy="80" r="130" fill="#7c3aed" opacity=".025"/>
+
+  <!-- Header -->
+  <text x="60" y="54" class="title">Modelo dimensional de dados</text>
+  <text x="60" y="77" class="subtitle">Relacionamentos entre dimensões, tabelas fato e medidas • estrutura para análise no Power BI</text>
+
+  <!-- Relationship lines -->
+  <g fill="none" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <!-- plans -> invoices -->
+    <path d="M280 160 H390"/>
+    <!-- plans -> sessions -->
+    <path d="M170 210 V285 H560 V355"/>
+    <!-- dates -> sessions -->
+    <path d="M170 390 H560"/>
+    <!-- geography -> points -->
+    <path d="M280 565 H370"/>
+    <!-- points -> sessions -->
+    <path d="M590 565 V490"/>
+    <!-- invoices -> users -->
+    <path d="M660 170 H1010 V350 H1050"/>
+    <!-- users -> vehicles -->
+    <path d="M1160 440 V540 H980"/>
+    <!-- vehicles -> sessions -->
+    <path d="M730 610 H700 V490 H700"/>
+  </g>
+
+  <!-- Relationship cardinalities -->
+  <g class="cardinal">
+    <g><rect x="305" y="147" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="317" y="161" text-anchor="middle">1</text></g>
+    <g><rect x="366" y="147" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="378" y="161" text-anchor="middle">*</text></g>
+
+    <g><rect x="158" y="244" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="170" y="258" text-anchor="middle">1</text></g>
+    <g><rect x="536" y="344" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="548" y="358" text-anchor="middle">*</text></g>
+
+    <g><rect x="184" y="378" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="196" y="392" text-anchor="middle">1</text></g>
+    <g><rect x="536" y="378" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="548" y="392" text-anchor="middle">*</text></g>
+
+    <g><rect x="306" y="552" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="318" y="566" text-anchor="middle">1</text></g>
+    <g><rect x="346" y="552" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="358" y="566" text-anchor="middle">*</text></g>
+
+    <g><rect x="578" y="510" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="590" y="524" text-anchor="middle">1</text></g>
+    <g><rect x="536" y="554" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="548" y="568" text-anchor="middle">*</text></g>
+
+    <g><rect x="670" y="157" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="682" y="171" text-anchor="middle">*</text></g>
+    <g><rect x="1018" y="330" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="1030" y="344" text-anchor="middle">1</text></g>
+
+    <g><rect x="1148" y="452" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="1160" y="466" text-anchor="middle">1</text></g>
+    <g><rect x="968" y="522" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="980" y="536" text-anchor="middle">*</text></g>
+
+    <g><rect x="710" y="590" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="722" y="604" text-anchor="middle">1</text></g>
+    <g><rect x="688" y="470" width="24" height="20" rx="6" fill="#fff" filter="url(#soft)"/><text x="700" y="484" text-anchor="middle">*</text></g>
+  </g>
+
+  <!-- Cards -->
+  <!-- dim_plans -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="110" width="220" height="100" rx="12" fill="#fff"/>
+    <rect x="60" y="110" width="220" height="34" rx="12" fill="url(#dim)"/>
+    <rect x="60" y="132" width="220" height="12" fill="url(#dim)"/>
+    <circle cx="80" cy="127" r="8" fill="#fff" opacity=".95"/>
+    <rect x="76" y="123" width="8" height="8" rx="2" fill="#334155"/>
+    <text x="95" y="132" class="table-title">public dim_plans</text>
+    <line x1="75" y1="158" x2="265" y2="158" stroke="#e2e8f0"/>
+    <text x="78" y="181" class="field">plan_type</text>
+  </g>
+
+  <!-- dim_dates -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="300" width="220" height="90" rx="12" fill="#fff"/>
+    <rect x="60" y="300" width="220" height="34" rx="12" fill="url(#dim)"/>
+    <rect x="60" y="322" width="220" height="12" fill="url(#dim)"/>
+    <circle cx="80" cy="317" r="8" fill="#fff" opacity=".95"/>
+    <rect x="76" y="313" width="8" height="8" rx="2" fill="#334155"/>
+    <text x="95" y="322" class="table-title">public dim_dates</text>
+    <line x1="75" y1="348" x2="265" y2="348" stroke="#e2e8f0"/>
+    <text x="78" y="371" class="field">session_date</text>
+  </g>
+
+  <!-- dim_geography -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="520" width="220" height="90" rx="12" fill="#fff"/>
+    <rect x="60" y="520" width="220" height="34" rx="12" fill="url(#dim)"/>
+    <rect x="60" y="542" width="220" height="12" fill="url(#dim)"/>
+    <circle cx="80" cy="537" r="8" fill="#fff" opacity=".95"/>
+    <rect x="76" y="533" width="8" height="8" rx="2" fill="#334155"/>
+    <text x="95" y="542" class="table-title">public dim_geography</text>
+    <line x1="75" y1="568" x2="265" y2="568" stroke="#e2e8f0"/>
+    <text x="78" y="591" class="field">geo_id</text>
+  </g>
+
+  <!-- dim_points -->
+  <g filter="url(#shadow)">
+    <rect x="370" y="520" width="220" height="90" rx="12" fill="#fff"/>
+    <rect x="370" y="520" width="220" height="34" rx="12" fill="url(#dim)"/>
+    <rect x="370" y="542" width="220" height="12" fill="url(#dim)"/>
+    <circle cx="390" cy="537" r="8" fill="#fff" opacity=".95"/>
+    <rect x="386" y="533" width="8" height="8" rx="2" fill="#334155"/>
+    <text x="405" y="542" class="table-title">public dim_points</text>
+    <line x1="385" y1="568" x2="575" y2="568" stroke="#e2e8f0"/>
+    <text x="388" y="589" class="field">geo_id</text>
+    <text x="388" y="605" class="field">point_id</text>
+  </g>
+
+  <!-- invoices -->
+  <g filter="url(#shadow)">
+    <rect x="390" y="100" width="270" height="180" rx="12" fill="#fff"/>
+    <rect x="390" y="100" width="270" height="36" rx="12" fill="url(#fact)"/>
+    <rect x="390" y="124" width="270" height="12" fill="url(#fact)"/>
+    <circle cx="412" cy="118" r="9" fill="#fff" opacity=".95"/>
+    <rect x="407" y="113" width="10" height="10" rx="2" fill="#0f766e"/>
+    <text x="430" y="123" class="table-title">public fct_invoices</text>
+    <line x1="405" y1="150" x2="645" y2="150" stroke="#e2e8f0"/>
+    <text x="408" y="172" class="field">invoice_id</text>
+    <text x="408" y="193" class="field">plan_type</text>
+    <text x="408" y="214" class="field">ref_month</text>
+    <text x="408" y="235" class="field">status</text>
+    <text x="408" y="256" class="field">total_amount</text>
+    <text x="540" y="256" class="field">total_kwh</text>
+    <text x="408" y="277" class="field">user_id</text>
+  </g>
+
+  <!-- sessions -->
+  <g filter="url(#shadow)">
+    <rect x="560" y="330" width="280" height="175" rx="12" fill="#fff"/>
+    <rect x="560" y="330" width="280" height="36" rx="12" fill="url(#fact)"/>
+    <rect x="560" y="354" width="280" height="12" fill="url(#fact)"/>
+    <circle cx="582" cy="348" r="9" fill="#fff" opacity=".95"/>
+    <rect x="577" y="343" width="10" height="10" rx="2" fill="#0f766e"/>
+    <text x="600" y="353" class="table-title">public fct_sessions</text>
+    <line x1="575" y1="380" x2="825" y2="380" stroke="#e2e8f0"/>
+    <text x="578" y="403" class="field">plan_type</text>
+    <text x="578" y="425" class="field">point_id</text>
+    <text x="578" y="447" class="field">session_date</text>
+    <text x="578" y="469" class="field">vehicle_id</text>
+  </g>
+
+  <!-- users -->
+  <g filter="url(#shadow)">
+    <rect x="1050" y="350" width="220" height="90" rx="12" fill="#fff"/>
+    <rect x="1050" y="350" width="220" height="34" rx="12" fill="url(#dim)"/>
+    <rect x="1050" y="372" width="220" height="12" fill="url(#dim)"/>
+    <circle cx="1070" cy="367" r="8" fill="#fff" opacity=".95"/>
+    <rect x="1066" y="363" width="8" height="8" rx="2" fill="#334155"/>
+    <text x="1085" y="372" class="table-title">public dim_users</text>
+    <line x1="1065" y1="398" x2="1255" y2="398" stroke="#e2e8f0"/>
+    <text x="1068" y="421" class="field">user_id</text>
+  </g>
+
+  <!-- vehicles -->
+  <g filter="url(#shadow)">
+    <rect x="730" y="540" width="250" height="140" rx="12" fill="#fff"/>
+    <rect x="730" y="540" width="250" height="36" rx="12" fill="url(#dim)"/>
+    <rect x="730" y="564" width="250" height="12" fill="url(#dim)"/>
+    <circle cx="752" cy="558" r="9" fill="#fff" opacity=".95"/>
+    <rect x="747" y="553" width="10" height="10" rx="2" fill="#334155"/>
+    <text x="770" y="563" class="table-title">public dim_vehicles</text>
+    <line x1="745" y1="590" x2="965" y2="590" stroke="#e2e8f0"/>
+    <text x="748" y="612" class="field">is_primary</text>
+    <text x="748" y="633" class="field">user_id</text>
+    <text x="748" y="654" class="field">vehicle_id</text>
+    <text x="748" y="675" class="field">vehicle_type</text>
+  </g>
+
+  <!-- measures -->
+  <g filter="url(#shadow)">
+    <rect x="1080" y="100" width="260" height="185" rx="12" fill="#fff"/>
+    <rect x="1080" y="100" width="260" height="36" rx="12" fill="url(#measure)"/>
+    <rect x="1080" y="124" width="260" height="12" fill="url(#measure)"/>
+    <circle cx="1102" cy="118" r="9" fill="#fff" opacity=".95"/>
+    <path d="M1098 122 L1102 114 L1106 122" fill="none" stroke="#6d28d9" stroke-width="2"/>
+    <text x="1120" y="123" class="table-title">_medidas</text>
+    <line x1="1095" y1="150" x2="1325" y2="150" stroke="#e2e8f0"/>
+    <text x="1098" y="172" class="field">∑  Column</text>
+    <text x="1098" y="195" class="field">% Faturamento do Plano</text>
+    <text x="1098" y="218" class="field">% Sessões Fim de Semana</text>
+    <text x="1098" y="241" class="field">Duração Média (min)</text>
+    <text x="1098" y="264" class="field">Faturamento Total</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(60 735)">
+    <rect x="0" y="0" width="1280" height="52" rx="12" fill="#ffffff" opacity=".78" stroke="#e2e8f0"/>
+    <rect x="20" y="17" width="18" height="18" rx="5" fill="url(#fact)"/>
+    <text x="47" y="30" class="legend">Tabela fato</text>
+    <rect x="155" y="17" width="18" height="18" rx="5" fill="url(#dim)"/>
+    <text x="182" y="30" class="legend">Dimensão</text>
+    <rect x="305" y="17" width="18" height="18" rx="5" fill="url(#measure)"/>
+    <text x="332" y="30" class="legend">Medidas DAX</text>
+    <line x1="465" y1="26" x2="525" y2="26" stroke="#94a3b8" stroke-width="2"/>
+    <text x="540" y="30" class="legend">Relacionamento</text>
+    <text x="690" y="30" class="legend">1 : um  •  * : muitos</text>
+    <text x="1040" y="30" class="legend">Data model • README</text>
+  </g>
+</svg>
