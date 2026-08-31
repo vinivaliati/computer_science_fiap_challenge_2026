@@ -6,31 +6,32 @@ morador específico". A seção de recomendação de plano é pensada do ponto d
 vista do GESTOR — não é "você economizaria", é "este usuário é candidato a
 tal plano, porque pertence a tal perfil de consumo".
 
+Fonte de dados: CSVs em data/processed/, não conexão direta ao Postgres.
+Motivo: este app é publicado no Streamlit Community Cloud, que não tem
+acesso ao Postgres local (roda em outra máquina). Os CSVs são gerados por
+scripts/09_export_user_app_data.py a partir do banco e precisam ser
+reexportados/recommitados sempre que os dados do banco mudarem -- os
+valores aqui são um retrato do momento da última exportação, não em tempo
+real. O restante do projeto (Power BI, motor de rateio, notebooks)
+continua usando o Postgres normalmente; só este app específico foi
+adaptado para CSV.
+
 Pré-requisito: os notebooks 01 (previsão) e 02 (perfis) precisam ter rodado
-pelo menos uma vez, gerando os artefatos em models/output/. O Postgres
-também precisa estar populado (sessões, faturas, planos).
+pelo menos uma vez, gerando os artefatos em models/output/. Os CSVs em
+data/processed/ precisam existir (rode scripts/09_export_user_app_data.py).
 
 Uso:
     streamlit run app/dashboard_usuario.py
 """
 
-import os
 from pathlib import Path
 
 import joblib
 import pandas as pd
-import psycopg2
 import streamlit as st
 
 MODELS_OUTPUT_DIR = Path(__file__).resolve().parent.parent / "models" / "output"
-
-DB_CONFIG = {
-    "host": os.getenv("POSTGRES_HOST", "localhost"),
-    "port": os.getenv("POSTGRES_PORT", "5432"),
-    "dbname": os.getenv("POSTGRES_DB", "evchargeops"),
-    "user": os.getenv("POSTGRES_USER", "evchargeops"),
-    "password": os.getenv("POSTGRES_PASSWORD", ""),
-}
+PROCESSED_DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "processed"
 
 st.set_page_config(page_title="EV ChargeOps — Perfil do Usuário", layout="wide")
 
@@ -39,55 +40,74 @@ st.set_page_config(page_title="EV ChargeOps — Perfil do Usuário", layout="wid
 # Carregamento (com cache)
 # ────────────────────────────────────────────
 
-@st.cache_resource
-def get_connection():
-    return psycopg2.connect(**DB_CONFIG)
+def _missing_csv_message(filename: str) -> None:
+    st.error(
+        f"Arquivo **{filename}** não encontrado em `data/processed/`.\n\n"
+        f"Rode `scripts/09_export_user_app_data.py` (com o Postgres acessível) "
+        f"para gerar os arquivos de dados deste app antes de usá-lo."
+    )
 
 
 @st.cache_data
 def load_users() -> pd.DataFrame:
-    conn = get_connection()
-    query = """
-        SELECT u.user_id, u.name, u.unit, u.plan_type, u.point_id,
-               COUNT(v.vehicle_id) AS n_vehicles
-        FROM dim_users u
-        LEFT JOIN dim_vehicles v ON v.user_id = u.user_id
-        GROUP BY u.user_id, u.name, u.unit, u.plan_type, u.point_id
-        ORDER BY u.name
-    """
-    return pd.read_sql(query, conn)
+    path = PROCESSED_DATA_DIR / "user_app_users.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
 
 
 @st.cache_data
+def load_all_sessions() -> pd.DataFrame:
+    path = PROCESSED_DATA_DIR / "user_app_sessions.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
+
+
 def load_user_sessions(user_id: str) -> pd.DataFrame:
-    conn = get_connection()
-    query = """
-        SELECT s.session_id, s.session_date, d.ref_month, s.duration_min,
-               s.kwh_delivered, s.status, s.anomaly_flag
-        FROM fct_sessoes s
-        JOIN dim_dates d ON d.session_date = s.session_date
-        WHERE s.user_id = %(user_id)s
-        ORDER BY s.session_date
-    """
-    return pd.read_sql(query, conn, params={"user_id": user_id})
+    all_sessions = load_all_sessions()
+    if all_sessions.empty:
+        return all_sessions
+    return all_sessions[all_sessions["user_id"] == user_id].sort_values("session_date")
 
 
 @st.cache_data
+def load_all_invoices() -> pd.DataFrame:
+    path = PROCESSED_DATA_DIR / "user_app_invoices.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
+
+
 def load_user_invoices(user_id: str) -> pd.DataFrame:
-    conn = get_connection()
-    query = """
-        SELECT invoice_id, ref_month, total_kwh, total_amount, status
-        FROM fct_invoices
-        WHERE user_id = %(user_id)s
-        ORDER BY ref_month
-    """
-    return pd.read_sql(query, conn, params={"user_id": user_id})
+    all_invoices = load_all_invoices()
+    if all_invoices.empty:
+        return all_invoices
+    return all_invoices[all_invoices["user_id"] == user_id].sort_values("ref_month")
 
 
 @st.cache_data
 def load_plans() -> pd.DataFrame:
-    conn = get_connection()
-    return pd.read_sql("SELECT * FROM dim_plans", conn)
+    path = PROCESSED_DATA_DIR / "user_app_plans.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
+
+
+@st.cache_data
+def load_points() -> pd.DataFrame:
+    path = PROCESSED_DATA_DIR / "user_app_points.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
+
+
+@st.cache_data
+def load_pacote_condominial_by_month() -> pd.DataFrame:
+    path = PROCESSED_DATA_DIR / "user_app_pacote_condominial_by_month.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
 
 
 @st.cache_resource
@@ -220,12 +240,9 @@ def render_forecast_section(sessions_df: pd.DataFrame, user_row: pd.Series, plan
     last_month = sessions_df["ref_month"].max()
     last_month_data = sessions_df[sessions_df["ref_month"] == last_month]
 
-    point_query_conn = get_connection()
-    point_power = pd.read_sql(
-        "SELECT power_kw FROM dim_points WHERE point_id = %(point_id)s",
-        point_query_conn, params={"point_id": user_row["point_id"]},
-    )
-    power_kw = float(point_power["power_kw"].iloc[0]) if not point_power.empty else 11.0
+    points_df = load_points()
+    point_match = points_df[points_df["point_id"] == user_row["point_id"]]
+    power_kw = float(point_match["power_kw"].iloc[0]) if not point_match.empty else 11.0
 
     model_input = pd.DataFrame([{
         "kwh_mes_atual": last_month_data["kwh_delivered"].sum(),
@@ -297,15 +314,7 @@ def render_recommendation_section(user_row: pd.Series, sessions_df: pd.DataFrame
     # NAQUELE mês, não pelo total cadastrado no plano -- por isso usamos a
     # média mensal como aproximação representativa, não a contagem fixa de
     # dim_users, que pode divergir do que ocorreu em meses específicos.
-    conn = get_connection()
-    n_pacote_query = """
-        SELECT d.ref_month, COUNT(DISTINCT s.user_id) as n
-        FROM fct_sessoes s
-        JOIN dim_dates d ON d.session_date = s.session_date
-        WHERE s.plan_type = 'pacote_condominial'
-        GROUP BY d.ref_month
-    """
-    n_pacote_result = pd.read_sql(n_pacote_query, conn)
+    n_pacote_result = load_pacote_condominial_by_month()
     n_users_pacote = max(1, round(n_pacote_result["n"].mean())) if not n_pacote_result.empty else 1
 
     simulations = []
@@ -375,17 +384,13 @@ def render_recommendation_section(user_row: pd.Series, sessions_df: pd.DataFrame
 
 st.title("EV ChargeOps — Perfil do Usuário")
 st.caption(
+    "Sprint 02 · Etapa 8b — MVP sem autenticação. Selecione um usuário abaixo para "
     "visualizar seu perfil (simula a visão que o app do morador teria)."
 )
 
-try:
-    users_df = load_users()
-except Exception as e:
-    st.error(
-        f"Não foi possível conectar ao banco de dados: {e}\n\n"
-        "Confirme se o Postgres está rodando e as variáveis de ambiente "
-        "(POSTGRES_HOST, POSTGRES_PORT, etc.) estão configuradas."
-    )
+users_df = load_users()
+if users_df.empty:
+    _missing_csv_message("user_app_users.csv")
     st.stop()
 
 selected_name = st.selectbox(
