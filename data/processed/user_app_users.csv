@@ -1,0 +1,151 @@
+user_id,name,unit,plan_type,point_id,n_vehicles
+U0147,Ágatha Andrade,14B,pay_per_use,P004,1
+U0051,Alexia Camargo,17D,pacote_condominial,P004,1
+U0126,Alícia Teixeira,11D,pay_per_use,P003,1
+U0087,Amanda Barros,9D,assinatura,P002,2
+U0023,Ana Lívia Teixeira,2B,pay_per_use,P003,1
+U0036,Ana Liz Cavalcante,4C,assinatura,P001,1
+U0010,Ana Sophia Pereira,13A,assinatura,P001,1
+U0079,Ana Vitória Silva,2A,pay_per_use,P003,1
+U0080,Anna Liz Carvalho,17B,pay_per_use,P004,1
+U0071,Apollo Aparecida,8B,assinatura,P001,1
+U0058,Apollo Ribeiro,16B,pay_per_use,P003,1
+U0149,Arthur Aparecida,5A,pay_per_use,P002,1
+U0028,Arthur Gabriel Farias,5B,pay_per_use,P003,1
+U0044,Beatriz Barbosa,10B,pacote_condominial,P003,1
+U0114,Benjamim Cassiano,11D,assinatura,P002,1
+U0038,Benjamin Pacheco,6D,pay_per_use,P004,2
+U0040,Bernardo Peixoto,10B,pay_per_use,P001,1
+U0092,Bruna Nunes,5C,assinatura,P003,1
+U0117,Carlos Eduardo Teixeira,8B,assinatura,P004,1
+U0043,Caroline Rios,1A,pay_per_use,P004,1
+U0139,Catarina Azevedo,19C,pay_per_use,P004,1
+U0054,Cauã Fogaça,19B,assinatura,P002,1
+U0033,Cecilia Lima,6D,pay_per_use,P002,1
+U0150,Clara da Cruz,14B,pay_per_use,P001,1
+U0137,Daniela Monteiro,18A,pay_per_use,P004,1
+U0060,Danilo da Luz,16D,pay_per_use,P002,1
+U0018,Danilo Rodrigues,12B,pay_per_use,P004,1
+U0107,Dante Silveira,12B,pay_per_use,P001,1
+U0015,Davi Miguel Moraes,2B,pay_per_use,P001,1
+U0145,Diego Jesus,1A,pay_per_use,P002,1
+U0073,Diogo Rezende,13A,pay_per_use,P002,2
+U0099,Dra. Juliana Duarte,11B,pay_per_use,P002,1
+U0006,Dr. Augusto Siqueira,15C,pay_per_use,P002,1
+U0146,Dr. Bruno Farias,16A,pay_per_use,P002,1
+U0056,Dr. Josué da Mata,3A,pacote_condominial,P002,1
+U0016,Eduardo Pires,3B,pay_per_use,P003,1
+U0024,Eloah da Luz,11D,pay_per_use,P001,1
+U0086,Eloah Martins,7C,pay_per_use,P003,1
+U0118,Emanuel da Costa,12C,pay_per_use,P004,2
+U0004,Emanuel Sampaio,8A,pay_per_use,P002,2
+U0055,Enrico Cavalcanti,3A,pay_per_use,P001,1
+U0129,Enrico Farias,17B,pay_per_use,P001,1
+U0108,Ester Correia,5A,assinatura,P004,1
+U0030,Esther Brito,12B,pay_per_use,P004,1
+U0062,Esther da Cunha,12D,pay_per_use,P004,2
+U0074,Felipe Sampaio,13A,assinatura,P002,1
+U0121,Gael Henrique Lima,3C,assinatura,P003,1
+U0066,Gael Leão,7D,pay_per_use,P002,1
+U0091,Guilherme Almeida,18B,pay_per_use,P001,1
+U0081,Heitor Azevedo,17A,assinatura,P001,1
+U0027,Hellena Abreu,15B,pay_per_use,P004,1
+U0057,Hellena Costa,3B,pay_per_use,P003,1
+U0026,Henry Gabriel Azevedo,7D,assinatura,P003,1
+U0002,Igor Montenegro,19D,pacote_condominial,P001,1
+U0035,Isaac Cavalcante,17C,pacote_condominial,P004,1
+U0135,Isabella Santos,14D,pacote_condominial,P002,1
+U0105,Isabelly das Neves,18A,pacote_condominial,P004,1
+U0138,Isabelly Marques,10B,assinatura,P003,1
+U0022,Isaque Araújo,9B,pay_per_use,P004,1
+U0003,Ísis Leão,1A,assinatura,P001,1
+U0122,João Felipe Casa Grande,17D,assinatura,P003,1
+U0059,João Lucas Ferreira,19D,pay_per_use,P002,1
+U0120,João Miguel Sampaio,13C,pay_per_use,P002,1
+U0140,João Miguel Silveira,15D,pacote_condominial,P004,1
+U0008,João Vitor Barros,9B,assinatura,P003,1
+U0095,Joaquim Caldeira,20A,assinatura,P003,1
+U0113,José Mendes,14A,pacote_condominial,P002,1
+U0088,José Pedro Garcia,10D,pay_per_use,P002,1
+U0041,Josué Pacheco,12B,pay_per_use,P002,1
+U0050,Julia Castro,13C,pay_per_use,P003,2
+U0124,Júlia Montenegro,6C,pay_per_use,P003,1
+U0078,Kamilly Vargas,2A,pay_per_use,P002,1
+U0089,Lara Sá,3A,assinatura,P003,1
+U0112,Larissa Melo,8B,pay_per_use,P002,2
+U0037,Laura Lima,4C,pay_per_use,P003,1
+U0123,Laura Macedo,1A,pay_per_use,P003,1
+U0111,Lavínia Sampaio,12D,pay_per_use,P001,1
+U0094,Leonardo Oliveira,6D,pay_per_use,P003,1
+U0052,Léo Pacheco,8B,assinatura,P001,1
+U0116,Letícia Pastor,13A,assinatura,P001,1
+U0020,Letícia Porto,3B,pay_per_use,P003,1
+U0012,Levi Guerra,15A,pacote_condominial,P001,1
+U0070,Lívia Borges,18A,pacote_condominial,P001,2
+U0067,Liz Guerra,14B,pay_per_use,P002,1
+U0131,Lorenzo Camargo,20C,pay_per_use,P003,1
+U0005,Lucca Caldeira,18D,pay_per_use,P002,1
+U0144,Luísa Brito,8B,pay_per_use,P003,1
+U0106,Luísa Fogaça,3B,pay_per_use,P001,1
+U0064,Luísa Pinto,2D,pay_per_use,P001,1
+U0076,Luiza Sá,14D,assinatura,P003,1
+U0053,Luiz Otávio Vieira,11A,pacote_condominial,P001,1
+U0068,Luna Martins,15B,assinatura,P003,1
+U0032,Maitê Caldeira,2A,pay_per_use,P001,1
+U0141,Manuella Farias,17D,pacote_condominial,P002,1
+U0009,Maria Clara Castro,11A,pay_per_use,P002,1
+U0143,Maria Helena Gomes,3B,pay_per_use,P003,1
+U0017,Maria Helena Peixoto,13C,pay_per_use,P001,1
+U0130,Maria Liz Teixeira,14A,pay_per_use,P003,1
+U0136,Maria Luísa Borges,20C,pay_per_use,P002,1
+U0065,Maria Luísa Duarte,4B,pay_per_use,P003,1
+U0049,Mariana da Mota,18B,pay_per_use,P002,1
+U0096,Mariane Ribeiro,4B,pay_per_use,P003,1
+U0031,Maria Sophia Martins,17D,pay_per_use,P002,1
+U0082,Maria Vitória Araújo,3A,pay_per_use,P002,1
+U0072,Maria Vitória Pires,16D,pay_per_use,P004,1
+U0061,Maya Ferreira,4A,pay_per_use,P002,1
+U0127,Melina da Mota,13B,assinatura,P001,1
+U0077,Melissa Castro,7C,assinatura,P002,2
+U0104,Melissa Vieira,6D,pay_per_use,P003,1
+U0119,Milena Sales,8A,assinatura,P002,1
+U0132,Nicole Jesus,10C,pay_per_use,P001,1
+U0115,Oliver Pereira,9B,pay_per_use,P002,1
+U0069,Olívia Vieira,15A,pay_per_use,P001,1
+U0034,Pedro Miguel Novaes,13D,pacote_condominial,P001,1
+U0125,Pedro Sousa,4D,pay_per_use,P001,1
+U0019,Rafael Abreu,12B,pay_per_use,P003,1
+U0075,Rafael Carvalho,9D,assinatura,P004,1
+U0085,Raquel Alves,14C,pay_per_use,P001,1
+U0029,Raquel Cunha,19D,pay_per_use,P003,2
+U0011,Ravi Garcia,12C,pay_per_use,P003,1
+U0100,Ravi Nunes,17D,pay_per_use,P003,1
+U0128,Ravy Ferreira,2D,assinatura,P003,1
+U0097,Rebeca Caldeira,4A,pay_per_use,P003,2
+U0103,Rebeca Novais,11B,pay_per_use,P001,1
+U0039,Rhavi Montenegro,9B,assinatura,P001,1
+U0133,Sara Pires,11D,pay_per_use,P004,1
+U0102,Sra. Alexia Moreira,9A,pay_per_use,P004,1
+U0093,Sr. Danilo Vasconcelos,8C,assinatura,P001,1
+U0048,Sr. João Montenegro,9D,pay_per_use,P002,1
+U0045,Sr. Joaquim Freitas,8A,pay_per_use,P001,1
+U0110,Sr. Kevin Albuquerque,7B,pay_per_use,P003,1
+U0101,Sr. Ryan Cunha,2A,pay_per_use,P003,1
+U0001,Srta. Ísis Borges,5A,pay_per_use,P002,1
+U0025,Srta. Luana Guerra,3B,pay_per_use,P003,1
+U0083,Srta. Maria Helena Mendes,13A,pay_per_use,P002,1
+U0142,Srta. Maria Isis da Conceição,3C,pay_per_use,P002,1
+U0148,Srta. Maya Brito,16D,pay_per_use,P004,1
+U0098,Srta. Maya Cavalcanti,9C,pay_per_use,P002,1
+U0013,Sr. Theo Gonçalves,3C,assinatura,P004,1
+U0042,Stephany Dias,20C,pay_per_use,P001,1
+U0109,Valentina Peixoto,12A,pay_per_use,P003,1
+U0046,Vinícius Albuquerque,16A,assinatura,P001,1
+U0014,Vitor Gabriel da Luz,19B,pay_per_use,P003,1
+U0090,Vitor Hugo Aragão,20A,pay_per_use,P004,1
+U0021,Vitória Abreu,6D,pay_per_use,P002,1
+U0134,Yan Cardoso,18B,pay_per_use,P003,1
+U0047,Yuri Cassiano,5D,pay_per_use,P002,1
+U0007,Yuri da Rocha,6D,pay_per_use,P001,1
+U0063,Zoe Rodrigues,15A,assinatura,P004,1
+U0084,Zoe Souza,19A,pay_per_use,P002,1

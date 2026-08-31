@@ -6,7 +6,6 @@ __pycache__/
  
 # Dados (não versionar dados gerados/baixados)
 data/raw/*
-data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 

@@ -1,0 +1,4 @@
+plan_type,description,rate_per_min,rate_per_min_discounted,monthly_fee,fixed_cost_monthly,active
+pay_per_use,"Cobrança por minuto, sem mensalidade",0.85,,,,True
+assinatura,Taxa fixa mensal + tarifa reduzida por minuto,,0.55,49.9,,True
+pacote_condominial,"Contrato com o condomínio, tarifa reduzida para todos",,0.4,,2500.0,True
