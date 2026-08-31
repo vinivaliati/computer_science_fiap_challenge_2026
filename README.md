@@ -19,8 +19,6 @@ piloto GoodWe HCA G2.
 
 ## Links do projeto
 
-Preencha os links abaixo assim que estiverem disponíveis publicamente.
-
 | Item | Link |
 |---|---|
 | Painel do gestor (Power BI) | *https://app.powerbi.com/view?r=eyJrIjoiYWQwZTlmOWUtOGM3NC00ZTUxLTg1ZjAtZmRkYzM2NWZkNDE2IiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9* |
