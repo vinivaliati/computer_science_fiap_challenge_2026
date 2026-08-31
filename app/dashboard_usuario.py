@@ -375,7 +375,6 @@ def render_recommendation_section(user_row: pd.Series, sessions_df: pd.DataFrame
 
 st.title("EV ChargeOps — Perfil do Usuário")
 st.caption(
-    "Sprint 02 · Etapa 8b — MVP sem autenticação. Selecione um usuário abaixo para "
     "visualizar seu perfil (simula a visão que o app do morador teria)."
 )
 

@@ -23,9 +23,11 @@ Preencha os links abaixo assim que estiverem disponíveis publicamente.
 
 | Item | Link |
 |---|---|
-| Painel do gestor (Power BI) | *(colar link aqui)* |
-| Dashboard de IA (Streamlit) | *(colar link aqui)* |
-| App do usuário (Streamlit) | *https://app.powerbi.com/view?r=eyJrIjoiYWQwZTlmOWUtOGM3NC00ZTUxLTg1ZjAtZmRkYzM2NWZkNDE2IiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9* |
+| Painel do gestor (Power BI) | *https://app.powerbi.com/view?r=eyJrIjoiYWQwZTlmOWUtOGM3NC00ZTUxLTg1ZjAtZmRkYzM2NWZkNDE2IiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9* |
+| Dashboard de IA (Streamlit) | *https://vinivaliati-computer-science-fiap-challe-appdashboard-ia-hqsiet.streamlit.app/* |
+| App do usuário (Streamlit) | Não postamos pois os dados estao em Postgres local |
+
+![App do usuário (Streamlit)](docs/app_usuario.gif)
 
 ## Sobre o problema
 
