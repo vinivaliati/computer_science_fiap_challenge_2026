@@ -10,7 +10,7 @@ Fonte de dados: CSVs em data/processed/, não conexão direta ao Postgres.
 Motivo: este app é publicado no Streamlit Community Cloud, que não tem
 acesso ao Postgres local (roda em outra máquina). Os CSVs são gerados por
 scripts/09_export_user_app_data.py a partir do banco e precisam ser
-reexportados/recommitados sempre que os dados do banco mudarem -- os
+reexportados/recommitados sempre que os dados do banco mudaremos
 valores aqui são um retrato do momento da última exportação, não em tempo
 real. O restante do projeto (Power BI, motor de rateio, notebooks)
 continua usando o Postgres normalmente; só este app específico foi
@@ -186,7 +186,7 @@ def render_invoice_section(invoices_df: pd.DataFrame) -> None:
 
     if latest["status"] == "revisao":
         st.warning(
-            "Esta fatura está em revisão — o modelo de detecção de anomalias (aba "
+            "Esta fatura está em revisão o modelo de detecção de anomalias (aba "
             "correspondente no Dashboard de IA) sinalizou pelo menos uma sessão com "
             "consumo fora do padrão esperado neste mês."
         )
