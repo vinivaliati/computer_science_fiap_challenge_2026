@@ -139,13 +139,7 @@ Faturas Pagas = CALCULATE(
     'public fct_invoices'[status] = "paga"
 )
 ```
-<p style="font-family: sans-serif; font-size: 13px; color: #b8860b; border-left: 3px solid #d4a017; padding-left: 10px; background-color: #fffbea;">
-⚠️ Com os dados atuais do piloto, esta medida sempre retorna 0 — o motor de rateio
-(<code>scripts/06_billing_engine.py</code>) só gera faturas com status
-<code>pendente</code> ou <code>revisao</code>; o status <code>paga</code> é válido no
-schema mas ainda não é simulado por nenhum script. A fórmula está correta e pronta
-para quando um fluxo de pagamento for implementado.
-</p>
+
 
 ### Ticket médio
 Tabela sugerida: `public fct_invoices`

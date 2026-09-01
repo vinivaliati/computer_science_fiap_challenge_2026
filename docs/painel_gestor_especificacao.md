@@ -91,9 +91,6 @@ o gestor abre primeiro).
 4. **Gráfico de barras horizontais**: sessões por ponto de recarga
    (`dim_points.location`, eixo X = contagem) — mostra qual ponto concentra mais uso.
 
-5. **Segmentador de página (slicer)**: filtro de intervalo de datas
-   (`dim_dates.ref_month`), aplicado a toda a aba.
-
 ---
 
 ## Aba 2 — Sessões
@@ -122,8 +119,6 @@ para investigar padrões de uso e sessões específicas.
    `session_datetime` completo, como uma tabela auxiliar só para este visual, ou
    ajustar o schema para adicionar hora à fato em uma iteração futura).
 
-5. **Segmentadores**: por `point_id`, por `status`, por `anomaly_flag`.
-
 ---
 
 ## Aba 3 — Faturamento
@@ -149,7 +144,6 @@ com qual status.
    `ref_month`, `total_amount` — lista de ação para o gestor revisar manualmente
    (ligação direta com o modelo de detecção de anomalias).
 
-6. **Segmentadores**: por `plan_type`, por `status`, por intervalo de `ref_month`.
 
 ---
 
@@ -174,16 +168,3 @@ têm, como estão distribuídos pelos pontos de recarga.
    `fct_sessoes`) — mostra utilização por ponto, útil para decisão de expansão de
    capacidade.
 
-5. **Segmentador**: por `point_id`, por `plan_type`.
-
----
-
-## Próximos passos
-
-1. Montar a estrutura de páginas/visuais no Power BI (ou prototipar primeiro no
-   Figma, como você mencionou) seguindo esta especificação.
-2. Confirmar os relacionamentos na visão de modelo do Power BI, com atenção
-   especial ao caso de `fct_invoices.ref_month` (ver nota acima).
-3. Voltar para a próxima etapa: fórmulas DAX (medidas calculadas) para os KPIs e
-   visuais que precisarem de agregação além de soma/contagem simples (ex: ticket
-   médio, taxa de anomalia, % de sessões em fim de semana).
