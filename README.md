@@ -24,6 +24,7 @@ piloto GoodWe HCA G2.
 | **Painel do Gestor** | Power BI | [**Abrir →**](https://app.powerbi.com/view?r=eyJrIjoiYWQwZTlmOWUtOGM3NC00ZTUxLTg1ZjAtZmRkYzM2NWZkNDE2IiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9) |
 | **Dashboard de IA** | Streamlit | [**Abrir →**](https://vinivaliati-computer-science-fiap-challe-appdashboard-ia-hqsiet.streamlit.app/) |
 | **App do Usuário** | Streamlit | [**Abrir →**](https://vinivaliati-computer-science-fiap-c-appdashboard-usuario-anjojx.streamlit.app/) |
+| **Slides Pitch** | Google Slides | [**Abrir →**](https://docs.google.com/presentation/d/1b40JQr-YCjPHeK4Jr7sKGfu7sUum6BftJU8t4H_qNOU/edit?usp=sharing) |
 
 ## Sobre o problema
  
